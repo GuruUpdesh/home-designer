@@ -1,0 +1,222 @@
+// @import 'colors';
+@import 'animations';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+}
+
+.tableContainer {
+    height: fit-content;
+    background-color: var(--clr-primary-bg);
+    padding-bottom: 50px;
+    border-radius: 20px;
+    overflow: hidden;
+    // width: fit-content;
+}
+
+.tableWrapper {
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: left;
+    margin-right: 30px;
+    width: 100%;
+
+
+    .delete:hover {
+        background-color: red;
+    }
+
+    .edit {
+        input {
+            font-size: 12px;
+        }
+        button {
+            width: auto;
+            border-radius: 20px;
+            padding: 0em 2em;
+        }
+    }
+
+    input {
+        background-color: var(--clr-grey);
+        border: none;
+        color: white;
+        padding: .5em;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+        &:focus-visible {
+            outline-color: var(--clr-primary);
+        }
+    }
+
+    tr:nth-child(odd) {
+        td {
+            background-color: var(--clr-table-even);
+        }
+    }
+
+    td:first-child, th:first-child {
+        padding-left: 30px;
+    }
+
+    .confirm {
+        outline: 1.5px solid var(--clr-primary);
+    }
+
+    button {
+        color: white;
+        border: none;
+        background-color: var(--clr-grey);
+        // width: var(--size-btn-small);
+        height: var(--size-btn-small);
+        font-size: 12px;
+        padding: 0 1rem;
+        border-radius: 20px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+        svg {
+            transform: translate(0px, 1px);
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: var(--clr-primary);
+        }
+    }
+
+    tr:hover {
+        td:first-child {
+            text-decoration: underline;
+        }
+    }
+
+    th {
+        color: white;
+        font-size: 24px;
+        font-weight: normal;
+        padding: 14px 1rem;
+        opacity: 0;
+        animation: fadeUp 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+        animation-delay: .2s;
+    }
+
+    td:nth-last-child(1), td:nth-last-child(2), td:nth-last-child(3), td:nth-last-child(4)  {
+        &:after {
+            height: 0;
+        }
+    }
+
+    tr {
+        animation: fadeRight 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+    }
+
+    td {
+        // white-space: nowrap;
+        position: relative;
+        font-size: 12px;
+        color: white;
+        background-color: var(--clr-table-odd);
+        padding: 1rem 1rem;
+        // overflow: hidden;
+        // max-width: fit-content;
+
+        &:after {
+            content: '';
+            top: 25%;
+            height: 50%; //You can change this if you want smaller/bigger borders
+            width: 1px;
+          
+            position: absolute;
+            right: 0;
+          
+            background-color: #fdfdfd4d; // The color of your border
+        }
+    }
+
+    .clientName {
+        color: var(--clr-primary);
+    }
+
+    .checkbox {
+        width: 10px;
+        height: 10px;
+        background-color: var(--clr-grey);
+    }
+}
+
+.tableTitle {
+    display: inline-block;
+    color: white;
+    white-space: nowrap;
+    margin-right: 10px;
+    animation: fadeRight 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+
+    h2 {
+        display: inline-block;
+        font-size: 24px;
+    }
+    p {
+        display: inline-block;
+        background-color: var(--clr-grey-highlight);
+        padding: .3rem 1rem;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 200;
+        transform: translateY(-20%);
+        margin-left: 20px;
+        @media (max-width: 700px){
+            margin-left: 10px;
+        }
+    }
+}
+
+.tableHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--clr-grey-dark);
+    padding: 10px 30px;
+
+    input, button {
+        border: none;
+        background-color: var(--clr-grey);
+        border-radius: 30px;
+        color: white;
+        animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+    }
+
+    input {
+        text-indent: 35%;
+        max-height: var(--size-btn);
+        
+        &:focus-visible {
+            outline-color: var(--clr-primary);
+        }
+        padding: 1rem 2rem;
+        @media (max-width: 700px){
+            padding: 1rem 1rem;
+        }
+        @media (max-width: 500px){
+            padding: 1rem 0;
+        }
+    }
+
+    button {
+        margin-left: 10px;
+        text-align: center;
+        width: calc(var(--size-btn) * 3);
+        height: var(--size-btn);
+        transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+        &:hover {
+            cursor: pointer;
+            background-color: var(--clr-primary);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+    }
+}

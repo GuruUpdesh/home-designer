@@ -1,0 +1,44 @@
+:root {
+    --clr-grey-highlight: #464646;
+    --clr-grey: #262626;
+    --clr-grey-dark: #1C1C1C;
+    --clr-table-odd: #1C1C1C; 
+    --clr-table-even: #181818; 
+    --clr-primary: #9B6CFF;
+    --clr-primary-highlight: #1f1a29;
+    --clr-primary-bg: #222024;
+    --clr-bg: #292929;
+
+    --size-btn: 45px;
+    --size-btn-small: 30px;
+}
+
+.backdrop {
+    z-index: 100;
+    position: absolute;
+	// position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	backdrop-filter: blur(10px) brightness(75%);
+}
+
+::-webkit-scrollbar {
+    height: 5px;
+	width: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background: rgba(153, 153, 153, 0.26);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
