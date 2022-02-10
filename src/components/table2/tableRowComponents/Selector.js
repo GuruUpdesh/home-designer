@@ -2,15 +2,6 @@ import React, { useState } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 const Selector = (props) => {
-	const [selected, setSelected] = useState(props.addresses[0]);
-	function updateSelected(value) {
-		if (selected === value) {
-			setSelected(props.addresses[0]);
-			return;
-		}
-		setSelected(value);
-	}
-
 	const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 	function dropDownOpen() {
 		setIsDropDownOpen(true);
@@ -36,13 +27,13 @@ const Selector = (props) => {
 		});
 		setSearchOptions(result);
 	}
-	return props.editable ? (
+	return props.addresses.length > 1 ? (
 		<div
 			className={isDropDownOpen ? "dropDown active" : "dropDown"}
 			tabIndex={0}
 		>
 			<div className="selector" onClick={toggleDropDown}>
-				{selected}
+				{"addresses"}
 				{isDropDownOpen ? <BiChevronUp /> : <BiChevronDown />}
 			</div>
 			{isDropDownOpen && (
@@ -56,15 +47,8 @@ const Selector = (props) => {
 					<ul>
 						{searchOptions.map((name, index) => (
 							<li
-								className={
-									name === selected
-										? "selected option"
-										: "option"
-								}
+								className="option"
 								tabIndex={0}
-								onClick={() => {
-									updateSelected(name);
-								}}
 								key={index}
 							>
 								{name}
@@ -75,40 +59,10 @@ const Selector = (props) => {
 				</div>
 			)}
 		</div>
-	) : (
-		<div
-			className={isDropDownOpen ? "dropDown active" : "dropDown"}
-			tabIndex={0}
-		>
-			<div className="selector" onClick={toggleDropDown}>
-				{selected}
-				{isDropDownOpen ? <BiChevronUp /> : <BiChevronDown />}
-			</div>
-			{isDropDownOpen && (
-				<div>
-					<ul>
-						{searchOptions.map((name, index) => (
-							<li
-								className={
-									name === selected
-										? "selected option"
-										: "option"
-								}
-								tabIndex={0}
-								onClick={() => {
-									updateSelected(name);
-								}}
-								key={index}
-							>
-								{name}
-							</li>
-						))}
-						<li></li>
-					</ul>
-				</div>
-			)}
-		</div>
-	);
-};
+	): (
+        <>
+            {props.addresses[0]}
+        </>
+    )};
 
-export default Selector;
+export default Selector

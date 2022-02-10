@@ -1,4 +1,5 @@
 @import 'config';
+@import 'nav';
 @import 'table';
 @import 'animations';
 
@@ -35,6 +36,7 @@ input, textarea {
 }
 
 body{
-    height: 100vh;
-    background-color: var(--clr-bg);
+    height: 100vh; 
+    background-color: var(--clr-bg);    
+    background: linear-gradient(45deg, #181818 0%, var(--clr-bg) 100%);
 }

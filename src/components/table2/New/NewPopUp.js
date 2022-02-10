@@ -1,21 +1,12 @@
 import React from "react";
 import Backdrop from "./Backdrop";
 
-const New = (props) => {
+const newPopUp = (props) => {
 	return (
 		<>
 			<div className="newContainer">
 				<div className="newContentWrapper">
-					<h1>new {props.title}</h1>
-					{props.textData.map((data, index) => {
-						return (
-							<input
-								type="text"
-								placeholder={data}
-								key={index}
-							/>
-						);
-					})}
+					<h1>new</h1>
 					<button
 						onClick={() => {
 							props.closeNew();
@@ -26,9 +17,9 @@ const New = (props) => {
 					<button className="confirm">confirm</button>
 				</div>
 			</div>
-			<Backdrop onClick={props.closeNew} />
+			<Backdrop onClick={props.closeNew}/>
 		</>
 	);
 };
 
-export default New;
+export default newPopUp;

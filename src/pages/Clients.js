@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import Table from "../components/Table";
+import Nav from "../components/Nav";
+// import Table from "../components/Table";
+import ClientTable from "../components/table2/ClientTable";
+import ProjectsTable from "../components/table2/ProjectsTable";
 
 const clientContent = {
 	title: "Clients",
-	tableAttributes: ["name", "email", "phone", "complete", "addresses"],
+	tableAttributes: ["name", "email", "phone", "addresses"],
 	tableData: [
 		{
 			name: "Client Name",
@@ -43,26 +46,10 @@ const clientContent = {
 	],
 };
 
-// const projectContent = {
-// 	title: "Projects",
-// 	tableAttributes: ["name", "date started", "is complete", "description", "billing hours"],
-// 	tableData: [
-// 		{
-// 			name: "kitchen",
-// 			dateStarted: "2/5/2022",
-// 			isComplete: "checkbox",
-// 			description: "place where you cook",
-// 			billingHours: ["123 street", "Silicon Valley", "456 dr"],
-// 		},
-// 	],
-// };
-
 const Clients = () => {
 	return (
 		<div className="clients">
-			<h2>Clients</h2>
-			<Table tableContent={clientContent} />
-			{/* <Table tableContent={projectContent} /> */}
+			<ClientTable tableContent={clientContent} />
 		</div>
 	);
 };

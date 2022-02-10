@@ -4,7 +4,10 @@
 	background-color: var(--clr-primary-bg);
 	padding-bottom: 36px;
 	border-radius: 20px;
-	// overflow: hidden;
+	overflow: hidden;
+	filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.644));
+	margin-bottom: 3vh;
+	
 
 	.tableHeader {
 		display: flex;
@@ -12,6 +15,8 @@
 		justify-content: space-between;
 		background-color: var(--clr-grey-dark);
 		padding: 10px 30px;
+        border: 1px solid rgba(255, 255, 255, 0.082);
+		border-radius: 20px 20px 0 0;
 
 		.tableTitle {
 			color: white;
@@ -28,7 +33,8 @@
 		}
 		p {
 			display: inline-block;
-			background-color: var(--clr-grey-highlight);
+			background: linear-gradient(45deg, #222022 0%, var(--clr-grey-highlight) 100%);
+			// background-color: var(--clr-grey-highlight);
 			padding: 0.3rem 1rem;
 			border-radius: 20px;
 			font-size: 12px;
@@ -52,14 +58,19 @@
 			width: calc(var(--size-btn) * 3);
 			height: var(--size-btn);
 			transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-
+			
 			opacity: 0;
 			animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
-
+			
 			&:hover {
-				box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+				box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 2px -3px 10px rgba(194, 120, 255, 0.185);
+				background: linear-gradient(45deg, #302a30 0%, var(--clr-primary) 100%);
+				text-shadow: -3px 3px 2px rgba(0, 0, 0, 0.301);
 			}
 		}
+	}
+	::-webkit-scrollbar-track {
+		background: inherit;
 	}
 }
 
@@ -75,7 +86,7 @@
 		tr {
 			// opacity: 0;
 			// animation: fadeRight 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
-
+			border-bottom: 1px solid rgba(255, 255, 255, 0.082);
 			&:nth-child(odd) {
 				td {
 					background-color: var(--clr-table-even);
@@ -88,13 +99,15 @@
 			font-size: 24px;
 			font-weight: normal;
 			padding: 14px 1rem;
-			// opacity: 0;
-			// animation: fadeUp 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
-			// animation-delay: .2s;
+			opacity: 0;
+			animation: fadeUp 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+			animation-delay: .2s;
 		}
 
 		td > * {
 			width: 100%;
+			// opacity: 0;
+			// animation: fadeUp .2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 		}
 
 		td {
@@ -117,10 +130,13 @@
 
 			&:first-child {
 				color: var(--clr-primary);
+				&::selection {
+					background-color: rgb(11, 10, 26);
+				}
 			}
 
 			&:last-child {
-				border-radius: 0 20px 20px 0;
+				// border-radius: 0 20px 20px 0;
 			}
 
 			&:nth-last-child(1),
@@ -149,6 +165,7 @@
 				bottom: 0;
 				left: 0;
 				font-size: 12px;
+				outline-offset: -1px;
 			}
 			td {
 				background-color: var(--clr-primary-highlight) !important;
@@ -164,7 +181,6 @@
 			white-space: nowrap;
 			height: var(--size-btn-small);
 			font-size: 12px;
-			// padding: 0 1rem;
 			border-radius: 20px;
 			box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
@@ -179,12 +195,14 @@
 }
 
 .active {
+	position: absolute;
 	outline: 1px solid var(--clr-primary);
 	background-color: inherit !important;
-	z-index: 100;
+	z-index: 1000000;
 	top: 30%;
 	width: 100%;
 	position: absolute;
+	overflow: visible !important;
 }
 
 .dropDown {
@@ -198,7 +216,7 @@
 	user-select: none;
 	max-width: 20ch;
 	white-space: nowrap;
-	overflow: hidden;
+	// overflow: hidden;
 
 	&:hover {
 		.selector {
@@ -306,4 +324,37 @@
 
 .confirm {
 	outline: 1px solid var(--clr-primary);
+}
+.checkboxContainer {
+	--size: 17px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	.checkbox {
+		height: var(--size);
+		width: var(--size);
+		background-color: var(--clr-grey);
+		border-radius: 3px;
+		outline: 1px solid white;
+
+		&:hover {
+			background-color: rgb(71, 71, 71);
+		}
+	}
+	.checked {
+		background-color: var(--clr-primary);
+		font-size: 24px;
+
+		&:hover {
+			background-color: #7852c9;
+		}
+
+		svg {
+			transform: translate(-3px, -3px)
+		}
+	}
+}
+
+.invalid {
+	outline: 1px solid red;
 }

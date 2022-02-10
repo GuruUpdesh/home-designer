@@ -8,6 +8,7 @@
     --clr-primary-highlight: #1f1a29;
     --clr-primary-bg: #222024;
     --clr-bg: #292929;
+    --clr-bg-nav: #232225;
 
     --size-btn: 45px;
     --size-btn-small: 30px;
@@ -24,13 +25,26 @@
 	backdrop-filter: blur(10px) brightness(75%);
 }
 
+.mainFull {
+    margin-left: 50px;
+}
+
+main {
+    transition: margin-left .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    padding-top: 5vh; 
+}
+
+.navLockedMain {
+    margin-left: 150px;
+}
+
 ::-webkit-scrollbar {
     height: 5px;
 	width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-	background: transparent;
+	background: var(--clr-bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -40,5 +54,11 @@
 
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
+}
+
+p, h1, h2, h3, h4, h5, span, td, th  {
+    &::selection {
+        background-color: var(--clr-primary);
+    }
 }
 
