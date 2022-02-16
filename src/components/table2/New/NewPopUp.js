@@ -1,4 +1,5 @@
 import React from "react";
+import Selector from "../tableRowComponents/Selector";
 import Backdrop from "./Backdrop";
 
 const newPopUp = (props) => {
@@ -6,7 +7,24 @@ const newPopUp = (props) => {
 		<>
 			<div className="newContainer">
 				<div className="newContentWrapper">
-					<h1>new</h1>
+					<h1>new {props.entity}</h1>
+					{props.data.map((object, index) => {
+						if (object.type === "text") {
+							return (
+								<>
+									<input placeholder={object.value} />
+								</>
+							);
+						}
+						if (object.type === "list") {
+							return (
+								<>
+									<label>selector</label>
+									{/* <Selector /> */}
+								</>
+							);
+						}
+					})}
 					<button
 						onClick={() => {
 							props.closeNew();
@@ -17,7 +35,7 @@ const newPopUp = (props) => {
 					<button className="confirm">confirm</button>
 				</div>
 			</div>
-			<Backdrop onClick={props.closeNew}/>
+			<Backdrop onClick={props.closeNew} />
 		</>
 	);
 };

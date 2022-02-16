@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TableHeader from "./TableHeader";
 import NewPopUp from "./New/NewPopUp";
 import TableRow from "./TableRow";
+import { BiSort } from "react-icons/bi";
 
 const ClientTable = (props) => {
 	// search is initially set to all the data and then filtered depending on search value
@@ -10,6 +11,27 @@ const ClientTable = (props) => {
 		props.tableContent.tableData
 	);
 	const [searchValue, setSearchValue] = useState("");
+	const [searchBy, setSearchBy] = useState(
+		Object.keys(props.tableContent.tableData[0])[0]
+	);
+	const [sortBy, setSortBy] = useState(-1);
+	const [unsorted, setUnsorted] = useState(clientTableSearchData);
+
+	function handleSort(index) {
+		if (index !== sortBy) {
+			setSortBy(index);
+			const copy = [...clientTableSearchData];
+			const sortProp = Object.keys(props.tableContent.tableData[0])[
+				index
+			];
+			copy.sort((a, b) => (a[sortProp] > b[sortProp] ? 1 : -1));
+			// console.log()
+			setClientTableSearchData(copy);
+		} else {
+			setSortBy(-1);
+			setClientTableSearchData(unsorted);
+		}
+	}
 
 	// new popup functionality
 	const [isNewOpen, setIsNewOpen] = useState(false);
@@ -30,7 +52,7 @@ const ClientTable = (props) => {
 	function promptDelete(index) {
 		console.log("delete prompt:", index);
 
-        cancelEdit()
+		cancelEdit();
 		setIsDeletePromptOpen(index);
 	}
 	function cancelDeletePrompt() {
@@ -45,7 +67,7 @@ const ClientTable = (props) => {
 	function edit(index) {
 		console.log("edit prompt: ", index);
 
-        cancelDeletePrompt()
+		cancelDeletePrompt();
 		setEditable(index);
 	}
 
@@ -64,25 +86,20 @@ const ClientTable = (props) => {
 		if (editable !== false) {
 			cancelEdit();
 		}
+		setSortBy(-1);
 
 		setSearchValue(value);
-		const totalSearchResult = [];
-		for (let i = 0; i < Object.keys(props.tableContent.tableData[0]).length; i++) {
-			const result = props.tableContent.tableData.filter((object) => {
-				return (
-					object[Object.keys(props.tableContent.tableData[0])[i]]
-						.toString()
-						.toLowerCase()
-						.indexOf(value.toLowerCase()) > -1
-				);
-			});
-			for (let n = 0; n < result.length; n++) {
-				totalSearchResult.indexOf(result[n]) === -1
-					? totalSearchResult.push(result[n])
-					: console.log();
-			}
-		}
-		setClientTableSearchData(totalSearchResult);
+		const result = props.tableContent.tableData.filter((object) => {
+			return (
+				object[searchBy]
+					.toString()
+					.toLowerCase()
+					.indexOf(value.toLowerCase()) > -1
+			);
+		});
+
+		setClientTableSearchData(result);
+		setUnsorted(result);
 	}
 
 	return (
@@ -93,6 +110,12 @@ const ClientTable = (props) => {
 				searchValue={searchValue}
 				searchHandler={searchHandler}
 				openNew={openNew}
+				attributes={props.tableContent.tableAttributes}
+				tableDataAttributes={Object.keys(
+					props.tableContent.tableData[0]
+				)}
+				searchBy={searchBy}
+				setSearchBy={setSearchBy}
 			/>
 			<div className="tableWrapper">
 				<table>
@@ -100,7 +123,20 @@ const ClientTable = (props) => {
 						<tr>
 							{props.tableContent.tableAttributes.map(
 								(attribute, index) => {
-									return <th key={index}>{attribute}</th>;
+									return (
+										<th
+											key={index}
+											className={
+												sortBy === index ? "sort" : ""
+											}
+											onClick={() => {
+												handleSort(index);
+											}}
+										>
+											{attribute}
+											<BiSort className="icon" />
+										</th>
+									);
 								}
 							)}
 							<th />
@@ -121,9 +157,9 @@ const ClientTable = (props) => {
 									isDeletePromptOpen={isDeletePromptOpen}
 									promptDelete={promptDelete}
 									cancelDeletePrompt={cancelDeletePrompt}
-                                    editable={editable}
-                                    edit={edit}
-                                    cancelEdit={cancelEdit}
+									editable={editable}
+									edit={edit}
+									cancelEdit={cancelEdit}
 									key={index}
 								/>
 							);
@@ -131,7 +167,18 @@ const ClientTable = (props) => {
 					</tbody>
 				</table>
 			</div>
-			{isNewOpen && <NewPopUp closeNew={closeNew} />}
+			{isNewOpen && (
+				<NewPopUp
+					entity={"client"}
+					closeNew={closeNew}
+					data={[
+						{ value: Object.keys(props.tableContent.tableData[0])[0], type: "text" },
+						{ value: Object.keys(props.tableContent.tableData[0])[1], type: "text" },
+						{ value: Object.keys(props.tableContent.tableData[0])[2], type: "text" },
+						{ value: Object.keys(props.tableContent.tableData[0])[3], type: "list" },
+					]}
+				/>
+			)}
 		</div>
 	);
 };

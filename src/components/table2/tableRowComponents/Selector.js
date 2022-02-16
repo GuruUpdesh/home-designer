@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import useOnClickOutside from "../../../hooks/useOnClickOutside";
+
 
 const Selector = (props) => {
 	const [isDropDownOpen, setIsDropDownOpen] = useState(false);
@@ -12,6 +14,8 @@ const Selector = (props) => {
 	function toggleDropDown() {
 		setIsDropDownOpen(!isDropDownOpen);
 	}
+	const ref=useRef()
+	useOnClickOutside(ref, () => dropDownClose())
 
 	const [options, setOptions] = useState(props.addresses);
 	const [searchOptions, setSearchOptions] = useState(options);
@@ -31,6 +35,7 @@ const Selector = (props) => {
 		<div
 			className={isDropDownOpen ? "dropDown active" : "dropDown"}
 			tabIndex={0}
+			ref={ref}
 		>
 			<div className="selector" onClick={toggleDropDown}>
 				{"addresses"}

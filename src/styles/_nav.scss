@@ -95,6 +95,7 @@ nav {
             }
 
             span {
+                white-space: nowrap;
                 position: absolute;
                 display: inline;
                 transform:translateX(20px) scale(.9);
