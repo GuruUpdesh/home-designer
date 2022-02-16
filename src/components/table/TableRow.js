@@ -7,24 +7,25 @@ import Selector from "./tableRowComponents/Selector";
 const TableRow = (props) => {
 	return props.index !== props.editable ? (
 		<tr className={props.index === props.isDeletePromptOpen ? "edit" : ""}>
-			{props.data.map((value, index) => {
-				if (value.type.toLowerCase() === "text") {
-					return <td key={index}>{value.value}</td>;
+			{props.data.map((object, index) => {
+				if (object.type.toLowerCase() === "text") {
+					return <td key={index}>{object.value}</td>;
 				}
-				if (value.type.toLowerCase() === "checkbox") {
+				if (object.type.toLowerCase() === "checkbox") {
 					return (
 						<td key={index}>
-							<div className="checkboxContainer">
+							<div className='checkboxContainer'>
 								<Checkbox />
 							</div>
 						</td>
 					);
 				}
-				if (value.type.toLowerCase() === "list") {
+				if (object.type.toLowerCase() === "list") {
 					return (
-						<td className="list" key={index}>
+						<td className='list' key={index}>
 							<Selector
-								addresses={value.value}
+								default={object.attribute}
+								addresses={object.value}
 								editable={props.index === props.editable}
 							/>
 						</td>
@@ -36,16 +37,15 @@ const TableRow = (props) => {
 				<>
 					<td>
 						<button
-							className="prompt"
+							className='prompt'
 							onClick={() => {
 								props.cancelDeletePrompt();
-							}}
-						>
+							}}>
 							cancel
 						</button>
 					</td>
 					<td>
-						<button className="delete">delete</button>
+						<button className='delete'>delete</button>
 					</td>
 				</>
 			) : (
@@ -54,8 +54,7 @@ const TableRow = (props) => {
 						<button
 							onClick={() => {
 								props.edit(props.index);
-							}}
-						>
+							}}>
 							<MdEdit />
 						</button>
 					</td>
@@ -63,8 +62,7 @@ const TableRow = (props) => {
 						<button
 							onClick={() => {
 								props.promptDelete(props.index);
-							}}
-						>
+							}}>
 							<IoClose />
 						</button>
 					</td>
@@ -72,19 +70,19 @@ const TableRow = (props) => {
 			)}
 		</tr>
 	) : (
-		<tr className="edit">
+		<tr className='edit'>
 			{props.data.map((value, index) => {
 				if (value.type.toLowerCase() === "text") {
 					return (
 						<td key={index}>
-							<input className="editInput invalid" type="text" value={value.value}/>
+							<input className='editInput invalid' type='text' value={value.value} />
 						</td>
 					);
 				}
 				if (value.type.toLowerCase() === "checkbox") {
 					return (
 						<td key={index}>
-							<div className="checkboxContainer">
+							<div className='checkboxContainer'>
 								<Checkbox />
 							</div>
 						</td>
@@ -92,7 +90,7 @@ const TableRow = (props) => {
 				}
 				if (value.type.toLowerCase() === "list") {
 					return (
-						<td className="list" key={index}>
+						<td className='list' key={index}>
 							<Selector
 								addresses={value.value}
 								editable={props.index === props.editable}
@@ -106,13 +104,12 @@ const TableRow = (props) => {
 				<button
 					onClick={() => {
 						props.cancelEdit();
-					}}
-				>
+					}}>
 					cancel
 				</button>
 			</td>
 			<td>
-				<button className="confirm">edit</button>
+				<button className='confirm'>edit</button>
 			</td>
 		</tr>
 	);

@@ -37,6 +37,9 @@ main {
 
 .navLockedMain {
 	margin-left: 150px;
+	@media (max-width: 1000px) {
+		margin-left: 80px;
+	}
 }
 
 ::-webkit-scrollbar {

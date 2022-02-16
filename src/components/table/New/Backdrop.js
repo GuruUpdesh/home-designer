@@ -6,8 +6,7 @@ const Backdrop = (props) => {
 			onClick={() => {
 				props.onClick();
 			}}
-			className="backdrop"
-		></div>
+			className='backdrop'></div>
 	);
 };
 

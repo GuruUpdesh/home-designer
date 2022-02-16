@@ -1,53 +1,40 @@
-import React from 'react'
-import ProjectsTable from "../components/table2/ProjectsTable";
+import React from "react";
+import Table from "../components/table/Table";
+
+const Projects = () => {
+	return (
+		<div className='clients'>
+			<Table tableContent={projectContent} />
+		</div>
+	);
+};
 
 const projectContent = {
 	title: "Projects",
-	tableAttributes: [
-		"name",
-		"date started",
-		"is complete",
-		"description",
-		"billing hours",
-	],
+	entity: "project",
+	template: {
+		attributes: ["name", "date started", "complete", "description", "billing hours"],
+		dataKeys: ["name", "dateStarted", "isComplete", "description", "billingHours"],
+		dataTypes: ["text", "text", "checkbox", "text", "list"],
+	},
 	tableData: [
 		{
 			name: "kitchen",
 			dateStarted: "2/5/2022",
 			isComplete: "checkbox",
-			description: "place where you cook",
-			billingHours: ["1hr Gilfoyle", "3hr Gilfoyle", "4hr Gilfoyle"],
+			description:
+				"This project was a complete remodel of the kitchen and included: design, demo, install, cabinets, appliances, paint, hard surfaces, etc.",
+			billingHours: ["idk yet", "idk yet"],
 		},
 		{
-			name: "kitchen",
-			dateStarted: "2/5/2022",
+			name: "living room",
+			dateStarted: "2/15/2022",
 			isComplete: "checkbox",
-			description: "place where you cook",
-			billingHours: ["1hr Gilfoyle", "3hr Gilfoyle", "4hr Gilfoyle"],
-		},
-		{
-			name: "kitchen",
-			dateStarted: "2/5/2022",
-			isComplete: "checkbox",
-			description: "place where you cook",
-			billingHours: ["1hr Gilfoyle", "3hr Gilfoyle", "4hr Gilfoyle"],
-		},
-		{
-			name: "kitchen",
-			dateStarted: "2/5/2022",
-			isComplete: "checkbox",
-			description: "place where you cook",
-			billingHours: ["1hr Gilfoyle", "3hr Gilfoyle", "4hr Gilfoyle"],
+			description:
+				"This project was a simple redesign. We procured and installed a new sofa and tv.",
+			billingHours: ["idk yet", "idk yet"],
 		},
 	],
-}
+};
 
-const Projects = () => {
-  return (
-    <div className='clients'>
-        <ProjectsTable tableContent={projectContent} />
-    </div>
-  )
-}
-
-export default Projects
+export default Projects;

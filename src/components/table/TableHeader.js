@@ -27,9 +27,9 @@ const TableHeader = (props) => {
 					value={props.searchValue}
 					onChange={(e) => props.searchHandler(e.target.value)}
 				/>
-				<a onClick={toggleFilter}>
+				<span onClick={toggleFilter}>
 					{isFilterOpen ? <BiChevronUp /> : <BiChevronDown />}
-				</a>
+				</span>
 				{isFilterOpen && (
 					<ul>
 						{props.attributes.map((attribute, index) => {

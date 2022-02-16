@@ -1,22 +1,22 @@
 import React from "react";
-import Selector from "../tableRowComponents/Selector";
+// import Selector from "../tableRowComponents/Selector";
 import Backdrop from "./Backdrop";
 
 const newPopUp = (props) => {
 	return (
 		<>
-			<div className="newContainer">
-				<div className="newContentWrapper">
+			<div className='newContainer'>
+				<div className='newContentWrapper'>
 					<h1>new {props.entity}</h1>
-					{props.data.map((object, index) => {
-						if (object.type === "text") {
+					{props.values.map((value, index) => {
+						if (props.types[index] === "text") {
 							return (
 								<>
-									<input placeholder={object.value} />
+									<input key={index} placeholder={value} />
 								</>
 							);
 						}
-						if (object.type === "list") {
+						if (props.types[index] === "list") {
 							return (
 								<>
 									<label>selector</label>
@@ -24,15 +24,15 @@ const newPopUp = (props) => {
 								</>
 							);
 						}
+						return <></>
 					})}
 					<button
 						onClick={() => {
 							props.closeNew();
-						}}
-					>
+						}}>
 						cancel
 					</button>
-					<button className="confirm">confirm</button>
+					<button className='confirm'>confirm</button>
 				</div>
 			</div>
 			<Backdrop onClick={props.closeNew} />
