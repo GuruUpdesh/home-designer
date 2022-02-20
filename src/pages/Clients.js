@@ -13,14 +13,6 @@ const Clients = () => {
 
 const testMassData  = [
     {
-        "name": "James Butt",
-        "email": "jbutt@gmail.com",
-        "phone": "504-621-8927",
-        "addresses": [
-            "6649 N Blue Gum St, New Orleans, LA"
-        ]
-    },
-    {
         "name": "Josephine Darakjy",
         "email": "josephine_darakjy@darakjy.org",
         "phone": "810-292-9388",
@@ -1528,78 +1520,6 @@ const clientContent = {
 		dataTypes: ["text", "text", "text", "list"],
 	},
 	tableData: testMassData
-	// tableData: [
-	// 	{
-	// 		name: "Gilfoyle Bertram",
-	// 		email: "uscitizen@piedpiper.com",
-	// 		phone: "000-000-0000",
-	// 		addresses: ["56 E Morehead St, Laredo, TX"],
-	// 	},
-	// 	{
-	// 		name: "Richard Hendricks",
-	// 		email: "richard@piedpiper.com",
-	// 		phone: "832-123-3231",
-	// 		addresses: [
-	// 			"25 E 75th St #69, Los Angeles, CA",
-	// 			"394 Manchester Blvd, Rockford, IL",
-	// 			"426 Wolf St, Metairie, LA",
-	// 		],
-	// 	},
-	// 	{
-	// 		name: "Dinesh Chugtai",
-	// 		email: "dinesh@piedpiper.com",
-	// 		phone: "232-392-1233",
-	// 		addresses: ["2371 Jerrold Ave, Kulpsville, PA"],
-	// 	},
-	// 	{
-	// 		name: "Lenna Paprocki",
-	// 		email: "lpaprocki@hotmail.com",
-	// 		phone: "907-385-4412",
-	// 		addresses: ["639 Main St, Anchorage, AK"],
-	// 	},
-	// 	{
-	// 		name: "Art Venere",
-	// 		email: "art@venere.org",
-	// 		phone: "856-636-8749",
-	// 		addresses: ["2371 Jerrold Ave, Kulpsville, PA"],
-	// 	},
-	// 	{
-	// 		name: "Josephine Darakjy",
-	// 		email: "josephine_darakjy@darakjy.org",
-	// 		phone: "810-292-9388",
-	// 		addresses: ["4 B Blue Ridge Blvd, Brighton, MI"],
-	// 	},
-	// 	{
-	// 		name: "Mitsue Scipione",
-	// 		email: "mscipione@scipione.com",
-	// 		phone: "530-986-9272",
-	// 		addresses: ["77 222 Dr, Brighton, CA"],
-	// 	},
-	// 	{
-	// 		name: "Meaghan Garufi",
-	// 		email: "meaghan@gmail.com",
-	// 		phone: "931-313-9635",
-	// 		addresses: ["69734 E Carrillo St, Mc Minnville, TN"],
-	// 	},
-	// 	{
-	// 		name: "Roxane Campain",
-	// 		email: "roxane@gmail.com",
-	// 		phone: "907-231-4722",
-	// 		addresses: ["1048 Main St, Fairbanks, AK"],
-	// 	},
-	// 	{
-	// 		name: "Fatima Saylors",
-	// 		email: "osu@oregonstatestate.edu",
-	// 		phone: "952-768-2416",
-	// 		addresses: ["2 Lighthouse Ave, Corvallis, OR"],
-	// 	},
-	// 	{
-	// 		name: "Jamal Vanausdal",
-	// 		email: "mod@eugene.com",
-	// 		phone: "732-234-1546",
-	// 		addresses: ["53075 Sw 152nd Ter #615, Monroe Township, NJ"],
-	// 	},
-	// ],
 };
 
 export default Clients;

@@ -50,6 +50,13 @@ const Table = (props) => {
 	// this function takes the index of the attribute that we want to sort the table by
 	// it then updates the state of the search data to the sorted information
 	function handleSort(index) {
+		// stop all edits and deletes
+		if (isDeletePromptOpen !== false) {
+			cancelDeletePrompt();
+		}
+		if (editable !== false) {
+			cancelEdit();
+		}
 		// if the index is not the current sorted index and the attribute data type is text
 		if (index !== sortBy && props.tableContent.template.dataTypes[index] === "text") {
 			setSortBy(index);
@@ -109,6 +116,7 @@ const Table = (props) => {
 				searchHandler={searchHandler}
 				openNew={openNew}
 				attributes={props.tableContent.template.attributes}
+				types={props.tableContent.template.dataTypes}
 				tableDataAttributes={props.tableContent.template.dataKeys}
 				searchBy={searchBy}
 				setSearchBy={setSearchBy}

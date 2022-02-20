@@ -285,6 +285,7 @@
 				left: 0;
 				font-size: 12px;
 				outline-offset: -1px;
+				outline: rgba(255, 255, 255, 0.301) solid 1px;
 			}
 			td {
 				background-color: var(--clr-primary-highlight) !important;
@@ -292,6 +293,9 @@
 					input {
 						text-indent: calc(1rem + 15px);
 					}
+				}
+				&:after {
+					height: 0;
 				}
 			}
 		}
@@ -394,16 +398,18 @@
 			padding-bottom: 5px;
 			font-weight: normal;
 			min-height: 15px;
+			min-width: 100%;
+			cursor: pointer;
 		}
 
-		.option {
-			transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
-			&:hover {
-				color: var(--clr-bg-secondary);
-				cursor: pointer;
-				background-color: $primary;
-			}
-		}
+		// .option {
+		// 	transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+		// 	&:hover {
+		// 		color: var(--clr-bg-secondary);
+		// 		cursor: pointer;
+		// 		background-color: $primary;
+		// 	}
+		// }
 	}
 }
 
@@ -419,6 +425,29 @@
 	border-radius: 30px;
 	box-shadow: 0px 1px 5px rgba(255, 255, 255, 0.096);
 
+	.dropDown {
+		position: relative;
+		width: 100%;
+		max-width: none;
+		margin-bottom: 2rem;
+		overflow: hidden;
+
+		ul {
+			max-height: 10rem;
+			overflow-y: scroll;
+		}
+
+		li {
+			border-radius: 0;
+		}
+	}
+
+	.formError{
+		font-size: 11px;
+		margin-bottom: 3px;
+		color: red;
+	}
+
 	.newContentWrapper {
 		display: flex;
 		flex-direction: column;
@@ -429,6 +458,14 @@
 	h1 {
 		text-transform: capitalize;
 		margin-bottom: 1rem;
+	}
+
+	textarea {
+		display: block;
+		width: 100%;
+		margin-bottom: .5rem;
+		opacity: 0;
+		animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 	}
 
 	input {
@@ -492,5 +529,5 @@
 }
 
 .invalid {
-	outline: 1px solid red;
+	outline: 1px solid red !important;
 }

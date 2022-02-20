@@ -1,14 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import Checkbox from "./tableRowComponents/Checkbox";
 import Selector from "./tableRowComponents/Selector";
 
 const TableRow = (props) => {
+	const [values, setValues] = useState({});
+	useEffect(() => {
+		const temp = {};
+		for (let i = 0; i < props.data.length; i++) {
+			temp[props.data[i].attribute] = props.data[i].value;
+		}
+		setValues(temp);
+	}, [props.data]);
+	const [errors, setErrors] = useState({});
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setValues({
+			...values,
+			[name]: value,
+		});
+	};
+
+	function validateEdit() {
+		let errors = {};
+		for (let i = 0; i < props.data.length; i++) {
+			if (props.data[i].type.toLowerCase() === "text") {
+				if (!values[Object.keys(values)[i]].trim()) {
+					errors[Object.keys(values)[i]] = true;
+				}
+			}
+		}
+		return errors
+	}
+
+	function handleSubmit() {
+		const validation = validateEdit();
+		setErrors(validation);
+		alert("edit")
+	}
+
+	function handleDelete() {
+		alert("delete")
+	}
+
 	return props.index !== props.editable ? (
 		<tr className={props.index === props.isDeletePromptOpen ? "edit" : ""}>
 			{props.data.map((object, index) => {
-				if (object.type.toLowerCase() === "text") {
+				if (object.type.toLowerCase() === "text" || object.type.toLowerCase() === "description") {
 					return <td key={index}>{object.value}</td>;
 				}
 				if (object.type.toLowerCase() === "checkbox") {
@@ -45,7 +85,9 @@ const TableRow = (props) => {
 						</button>
 					</td>
 					<td>
-						<button className='delete'>delete</button>
+						<button className='delete' onClick={() => {
+							handleDelete()
+						}}>delete</button>
 					</td>
 				</>
 			) : (
@@ -75,7 +117,36 @@ const TableRow = (props) => {
 				if (value.type.toLowerCase() === "text") {
 					return (
 						<td key={index}>
-							<input className='editInput invalid' type='text' value={value.value} />
+							<input
+								className="editInput"
+								className={errors[value.attribute] ? 'editInput invalid' : 'editInput '}
+								type='text'
+								value={values[value.attribute]}
+								name={value.attribute}
+								placeholder={value.attribute}
+								autoComplete={"off"}
+								onChange={(e) => {
+									handleChange(e);
+								}}
+							/>
+						</td>
+					);
+				}
+				if (value.type.toLowerCase() === "description") {
+					return (
+						<td key={index}>
+							<textarea
+								className="editInput"
+								className={errors[value.attribute] ? 'editInput invalid' : 'editInput '}
+								type='text'
+								value={values[value.attribute]}
+								name={value.attribute}
+								placeholder={value.attribute}
+								autoComplete={"off"}
+								onChange={(e) => {
+									handleChange(e);
+								}}
+							/>
 						</td>
 					);
 				}
@@ -92,6 +163,7 @@ const TableRow = (props) => {
 					return (
 						<td className='list' key={index}>
 							<Selector
+								default={value.attribute}
 								addresses={value.value}
 								editable={props.index === props.editable}
 							/>
@@ -103,13 +175,14 @@ const TableRow = (props) => {
 			<td>
 				<button
 					onClick={() => {
+						setErrors({})
 						props.cancelEdit();
 					}}>
 					cancel
 				</button>
 			</td>
 			<td>
-				<button className='confirm'>edit</button>
+				<button className='confirm' onClick={handleSubmit}>edit</button>
 			</td>
 		</tr>
 	);

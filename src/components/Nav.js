@@ -3,13 +3,14 @@ import { MdPeopleAlt } from "react-icons/md";
 import { AiFillContainer } from "react-icons/ai";
 import { FaAddressCard, FaMoneyBillWaveAlt } from "react-icons/fa";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
-import { BsFileEarmarkPersonFill } from "react-icons/bs";
+import { BsFileEarmarkPersonFill, BsArrowDownUp } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 const Nav = (props) => {
 	const navigate = useNavigate();
 	return (
-		<nav className={props.navLocked ? "navLocked" : ""}>
+		<nav
+			className={props.navLocked ? "navLocked" : ""}>
 			<div
 				className='navController'
 				onClick={() => {
@@ -49,6 +50,17 @@ const Nav = (props) => {
 						}}>
 						<AiFillContainer />
 						<span>projects</span>
+					</button>
+				</li>
+				<li>
+					<button
+						className={props.activeButton === "projects-employees" ? "activeBtn relationship" : "relationship"}
+						onClick={() => {
+							props.setActiveButton("projects-employees");
+							navigate("/projects-employees");
+						}}>
+						<BsArrowDownUp />
+						<span>projects_employees</span>
 					</button>
 				</li>
 				<li>

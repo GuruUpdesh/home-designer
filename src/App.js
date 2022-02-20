@@ -7,6 +7,7 @@ import Addresses from "./pages/Addresses";
 import Projects from "./pages/Projects";
 import Employees from "./pages/Employees";
 import BillingHours from "./pages/BillingHours";
+import ProjectsEmployee from "./pages/ProjectsEmployee";
 
 const rootElement = document.getElementById("root");
 
@@ -19,6 +20,7 @@ function App() {
 					<Route exact path="/clients" element={<Clients />} />
 					<Route path="/addresses" element={<Addresses />} />
 					<Route path="/projects" element={<Projects />} />
+					<Route path="/projects-employees" element={<ProjectsEmployee />} />
 					<Route path="/employees" element={<Employees />} />
 					<Route path="/billing-hours" element={<BillingHours />} />
 				</Routes>

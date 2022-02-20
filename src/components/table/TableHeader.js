@@ -13,16 +13,16 @@ const TableHeader = (props) => {
 	const ref = useRef();
 	useOnClickOutside(ref, () => closeFilter());
 	return (
-		<div className="tableHeader">
-			<div className="tableTitle">
+		<div className='tableHeader'>
+			<div className='tableTitle'>
 				<h2>{props.title}</h2>
 				<p>{props.length}</p>
 			</div>
-			<div className="search" ref={ref}>
+			<div className='search' ref={ref}>
 				<input
 					className={isFilterOpen ? "searchDropDownActive" : ""}
 					onFocus={closeFilter}
-					type="text"
+					type='text'
 					placeholder={"search by " + props.searchBy}
 					value={props.searchValue}
 					onChange={(e) => props.searchHandler(e.target.value)}
@@ -33,20 +33,19 @@ const TableHeader = (props) => {
 				{isFilterOpen && (
 					<ul>
 						{props.attributes.map((attribute, index) => {
-							return (
-								<li key={index}>
-									<button
-										onClick={() => {
-											props.setSearchBy(
-												props.tableDataAttributes[index]
-											);
-											closeFilter();
-										}}
-									>
-										{attribute}
-									</button>
-								</li>
-							);
+							if (props.types[index] !== "checkbox") {
+								return (
+									<li key={index}>
+										<button
+											onClick={() => {
+												props.setSearchBy(props.tableDataAttributes[index]);
+												closeFilter();
+											}}>
+											{attribute}
+										</button>
+									</li>
+								);
+							}
 						})}
 					</ul>
 				)}
