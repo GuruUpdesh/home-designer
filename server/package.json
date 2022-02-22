@@ -4,7 +4,8 @@
   "description": "",
   "main": "AppServer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,11 @@
   },
   "homepage": "https://github.com/GuruUpdesh/Home-Designer#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "forever": "^4.0.3",
-    "mysql": "^2.18.1"
+    "mssql": "^8.0.2",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15"
   }
 }
