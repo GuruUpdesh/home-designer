@@ -1,5 +1,5 @@
 const  config          = require('./db-connector'),
-       sql            = require('mssql');
+       sql             = require('mssql');
 
 const getClients = async() => {
     try {
