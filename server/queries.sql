@@ -5,9 +5,6 @@ DROP TABLE IF EXISTS `Projects`;
 DROP TABLE IF EXISTS `Addresses`;
 DROP TABLE IF EXISTS `Clients`;
 
-
-
-
 CREATE TABLE Clients (
     clientID int (11) auto_increment unique not Null ,
     name varchar(255) not Null, 
@@ -25,7 +22,6 @@ CREATE TABLE Addresses (
     isComplete boolean not null default 0,
     dateStarted datetime not Null,
     dateComplete datetime,
-    projectID varchar(255) not Null, 
     cid int,
     PRIMARY KEY (`addressID`),
     KEY `Clients_ibfk_1` (`cid`),
@@ -78,8 +74,74 @@ CREATE TABLE Projects_Employees (
 );
 
 
+INSERT INTO Clients (name,email,phone) values ('jin yang', 'smiths@hello.com', '231');
+INSERT INTO Clients (name,email,phone) values ('jack barker', 'miths@hello.com', '31');
 
 
+INSERT INTO Addresses (`zipCode`,`state`,`city`,`street`,`isComplete`,`dateStarted`,`dateComplete`,`cid`) values (
+    '32221',
+    'FL',
+    'Jacksonville',
+    'second street',
+    'false',
+    DATE '2015-11-17',
+    DATE '2015-12-17',
+     (SELECT clientID FROM Clients WHERE name = 'jin yang')
+);
+
+INSERT INTO Addresses (`zipCode`,`state`,`city`,`street`,`isComplete`,`dateStarted`,`dateComplete`,`cid`) values (
+    '32222',
+    'FL',
+    'Jacksonville2',
+    '3HG4',
+    'false',
+    DATE '2015-11-17',
+    DATE '2015-12-17',
+     (SELECT clientID FROM Clients WHERE name = 'jack barker')
+);
+
+INSERT INTO Employees (`name`,`email`,`billingRate`,`isCurrentEmployee`) values (
+    'Richard Hendricks',
+    'Eugene@qwe.com',
+    '99',
+    'true'
+);
+INSERT INTO Employees (`name`,`email`,`billingRate`,`isCurrentEmployee`) values (
+    'Bertram Gilfoyle',
+    'Eugene@qwe.com',
+    '99',
+    'true'
+);
+
+INSERT INTO Projects (`name`,`dateStarted`,`dateComplete`,`isComplete`,`projectDescription`,`aid`) values (
+    'OSUstadium',
+    DATE '2019-11-17',
+    DATE '2019-12-17',
+    'false',
+    'new stadium',
+     (SELECT addressID FROM Addresses WHERE street = 'second street')
+);
+INSERT INTO Projects (`name`,`dateStarted`,`dateComplete`,`isComplete`,`projectDescription`,`aid`) values (
+    'your moms kitchen',
+    DATE '2019-11-17',
+    DATE '2019-12-17',
+    'false',
+    'renovate kitchen',
+     (SELECT addressID FROM Addresses WHERE street = 'second street')
+);
+
+INSERT INTO Billing_Hours (`timeIn`,`timeOut`,`descriptionOfWork`,`eid`,`pid`) values (
+    DATE '2019-11-17',
+    DATE '2019-12-17',
+    'just get started',
+    (SELECT employeeID FROM Employees WHERE name = 'Richard Hendricks'),
+    (SELECT projectID FROM Projects WHERE name = 'OSUstadium')
+);
+
+INSERT INTO Projects_Employees (`pid`,`eid`) values (
+    (SELECT projectID FROM Projects WHERE name = 'OSUstadium'),
+    (SELECT employeeID FROM Employees WHERE name = 'Richard Hendricks')
+);
 
 
 
