@@ -43,10 +43,10 @@ CREATE TABLE Projects (
     dateComplete varchar(255) default Null,
     isComplete boolean not null default 0,
     projectDescription text,
-    aid int,
+    aID int,
     PRIMARY KEY (`projectID`),
-    KEY `Projects_ibfk_1` (`aid`),
-    CONSTRAINT `Projects_ibfk_1` foreign key (`aid`) REFERENCES `Addresses` (`addressID`)
+    KEY `Projects_ibfk_1` (`aID`),
+    CONSTRAINT `Projects_ibfk_1` foreign key (`aID`) REFERENCES `Addresses` (`addressID`)
 );
 
 CREATE TABLE Billing_Hours (
@@ -108,7 +108,7 @@ INSERT INTO Employees (`name`,`email`,`billingRate`,`isCurrentEmployee`) values 
     'true'
 );
 
-INSERT INTO Projects (`name`,`dateStarted`,`dateComplete`,`isComplete`,`projectDescription`,`aid`) values (
+INSERT INTO Projects (`name`,`dateStarted`,`dateComplete`,`isComplete`,`projectDescription`,`aID`) values (
     'OSUstadium',
     DATE '2019-11-17',
     DATE '2019-12-17',
@@ -116,7 +116,7 @@ INSERT INTO Projects (`name`,`dateStarted`,`dateComplete`,`isComplete`,`projectD
     'new stadium',
      (SELECT addressID FROM Addresses WHERE address like 'second street')
 );
-INSERT INTO Projects (`name`,`dateStarted`,`dateComplete`,`isComplete`,`projectDescription`,`aid`) values (
+INSERT INTO Projects (`name`,`dateStarted`,`dateComplete`,`isComplete`,`projectDescription`,`aID`) values (
     'your moms kitchen',
     DATE '2019-11-17',
     DATE '2019-12-17',
