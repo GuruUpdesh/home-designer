@@ -4,17 +4,16 @@ import NewPopUp from "./New/NewPopUp";
 import TableRow from "./TableRow";
 import { BiSort } from "react-icons/bi";
 
-const Table = (props) => {
+const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow }) => {
 	// on load
-	useEffect(() => {}, []);
 
 	// search is initially set to all the data and then filtered depending on search value
 	// the table is always displaying the content of searchData never tableContent
-	const [tableSearchData, setTableSearchData] = useState(props.tableContent.tableData);
+	const [tableSearchData, setTableSearchData] = useState(tableData);
 	const [searchValue, setSearchValue] = useState("");
 
 	// search by is the attribute that is being compared in search
-	const [searchBy, setSearchBy] = useState(props.tableContent.template.dataKeys[0]);
+	const [searchBy, setSearchBy] = useState(template.dataKeys[0]);
 
 	// function handles search filtering
 	function searchHandler(value) {
@@ -31,7 +30,7 @@ const Table = (props) => {
 		setSearchValue(value);
 
 		// filters the raw data based off the search attribute
-		const result = props.tableContent.tableData.filter((object) => {
+		const result = tableData.filter((object) => {
 			return object[searchBy].toString().toLowerCase().indexOf(value.toLowerCase()) > -1;
 		});
 
@@ -58,12 +57,12 @@ const Table = (props) => {
 			cancelEdit();
 		}
 		// if the index is not the current sorted index and the attribute data type is text
-		if (index !== sortBy && props.tableContent.template.dataTypes[index] === "text") {
+		if (index !== sortBy && template.dataTypes[index] === "text") {
 			setSortBy(index);
 			const copy = [...tableSearchData]; // make a copy of the data to sort on
 
 			// sort the copy based off the selected attribute
-			const sortProp = props.tableContent.template.dataKeys[index];
+			const sortProp = template.dataKeys[index];
 			copy.sort((a, b) => (a[sortProp] > b[sortProp] ? 1 : -1));
 			setTableSearchData(copy);
 
@@ -107,17 +106,25 @@ const Table = (props) => {
 		setEditable(false);
 	}
 
+	// on data change
+	useEffect(() => {
+		cancelEdit()
+		cancelDeletePrompt()
+		setTableSearchData(tableData);
+		setSearchValue("");
+	}, [tableData]);
+
 	return (
 		<div className='tableContainer'>
 			<TableHeader
-				title={props.tableContent.title}
+				title={title}
 				length={tableSearchData.length}
 				searchValue={searchValue}
 				searchHandler={searchHandler}
 				openNew={openNew}
-				attributes={props.tableContent.template.attributes}
-				types={props.tableContent.template.dataTypes}
-				tableDataAttributes={props.tableContent.template.dataKeys}
+				attributes={template.attributes}
+				types={template.dataTypes}
+				tableDataAttributes={template.dataKeys}
 				searchBy={searchBy}
 				setSearchBy={setSearchBy}
 			/>
@@ -125,11 +132,11 @@ const Table = (props) => {
 				<table>
 					<thead>
 						<tr>
-							{props.tableContent.template.attributes.map((attribute, index) => {
+							{template.attributes.map((attribute, index) => {
 								return (
 									<th
 										key={index}
-										className={sortBy === index ? "sort" : props.tableContent.template.dataTypes[index] === "text" ? "sortable": ""} //prettier-ignore
+										className={sortBy === index ? "sort" : template.dataTypes[index] === "text" ? "sortable": ""} //prettier-ignore
 										onClick={() => {
 											handleSort(index);
 										}}>
@@ -146,15 +153,11 @@ const Table = (props) => {
 						{tableSearchData.map((data, index) => {
 							const tableRowData = [];
 							try {
-								for (
-									let i = 0;
-									i < props.tableContent.template.attributes.length;
-									i++
-								) {
+								for (let i = 0; i < template.attributes.length; i++) {
 									tableRowData.push({
-										value: data[props.tableContent.template.dataKeys[i]],
-										type: props.tableContent.template.dataTypes[i],
-										attribute: props.tableContent.template.attributes[i],
+										value: data[template.dataKeys[i]],
+										type: template.dataTypes[i],
+										attribute: template.attributes[i],
 									});
 								}
 							} catch (error) {
@@ -173,6 +176,8 @@ const Table = (props) => {
 									edit={edit}
 									cancelEdit={cancelEdit}
 									key={index}
+									editRow={editRow}
+									deleteRow={deleteRow}
 								/>
 							);
 						})}
@@ -181,10 +186,11 @@ const Table = (props) => {
 			</div>
 			{isNewOpen && (
 				<NewPopUp
-					entity={"client"}
+					entity={entity}
 					closeNew={closeNew}
-					values={props.tableContent.template.attributes}
-					types={props.tableContent.template.dataTypes}
+					values={template.attributes}
+					types={template.dataTypes}
+					addRow={addRow}
 				/>
 			)}
 		</div>

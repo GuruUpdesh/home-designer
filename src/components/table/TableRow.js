@@ -27,7 +27,7 @@ const TableRow = (props) => {
 		let errors = {};
 		for (let i = 0; i < props.data.length; i++) {
 			if (props.data[i].type.toLowerCase() === "text") {
-				if (!values[Object.keys(values)[i]].trim()) {
+				if (!values[Object.keys(values)[i]]) {
 					errors[Object.keys(values)[i]] = true;
 				}
 			}
@@ -38,11 +38,12 @@ const TableRow = (props) => {
 	function handleSubmit() {
 		const validation = validateEdit();
 		setErrors(validation);
-		alert("edit")
+		// alert("edit")
+		props.editRow(props.index, values)
 	}
 
 	function handleDelete() {
-		alert("delete")
+		props.deleteRow(props.index, values.id)
 	}
 
 	return props.index !== props.editable ? (

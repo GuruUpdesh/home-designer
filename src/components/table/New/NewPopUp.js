@@ -37,9 +37,8 @@ const NewPopUp = (props) => {
 		e.preventDefault();
 		const validation = validateNew();
 		setErrors(validation);
-		if (Object.keys(validation).length === 0) {
-			alert("trigger add");
-		}
+		props.addRow(values)
+		props.closeNew()
 	}
 	return (
 		<>
@@ -47,7 +46,7 @@ const NewPopUp = (props) => {
 				<form className='newContentWrapper' onSubmit={handleSubmit}>
 					<h1>new {props.entity}</h1>
 					{props.values.map((value, index) => {
-						if (props.types[index] === "text") {
+						if (props.types[index] === "text" && value !== 'id') {
 							return (
 								<>
 									{errors[value] && <p className='formError'>{errors[value]}</p>}
