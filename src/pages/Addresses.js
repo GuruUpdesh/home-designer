@@ -5,9 +5,9 @@ const Addresses = () => {
 	const title = "Addresses";
 	const entity = "address";
 	const template = {
-		attributes: ["id", "address", "client", "complete", "date started", "date complete"],
-		dataKeys: ["addressID", "address", "cID", "", "dateStarted", "dateComplete"],
-		dataTypes: ["id", "text", "text", "checkbox", "text", "text"],
+		attributes: ["id", "address", "client", "complete", "date started", "date complete", "projects"],
+		dataKeys: ["addressID", "address", "cID", "", "dateStarted", "dateComplete", "projects"],
+		dataTypes: ["id", "text", "text", "checkbox", "text", "text", "list"],
 	};
 
 	const [tableData, setTableData] = useState([]);
