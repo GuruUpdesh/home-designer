@@ -25,11 +25,13 @@ const NewPopUp = (props) => {
 		let errors = {};
 
 		for (let i = 0; i < props.values.length; i++) {
-			if (!values[Object.keys(values)[i]].trim()) {
-				errors[Object.keys(values)[i]] = `${Object.keys(values)[i]} is required`;
+			const key = Object.keys(values)[i]
+			if (props.types[i] === "text" && !values[key]) {
+				errors[key] = `${key} is required`
 			}
 		}
 
+		console.log(errors)
 		return errors;
 	}
 
@@ -37,8 +39,10 @@ const NewPopUp = (props) => {
 		e.preventDefault();
 		const validation = validateNew();
 		setErrors(validation);
-		props.addRow(values)
-		props.closeNew()
+		if ((Object.keys(validation).length) == 0) {
+			props.addRow(values)
+			props.closeNew()
+		}
 	}
 	return (
 		<>
@@ -46,12 +50,12 @@ const NewPopUp = (props) => {
 				<form className='newContentWrapper' onSubmit={handleSubmit}>
 					<h1>new {props.entity}</h1>
 					{props.values.map((value, index) => {
-						if (props.types[index] === "text" && value !== 'id') {
+						if (props.types[index] === "text") {
 							return (
-								<>
+								<div key={index}>
 									{errors[value] && <p className='formError'>{errors[value]}</p>}
 									<input
-										key={index}
+									 	className={errors[value] ? "inputError" : ""}
 										name={value}
 										value={values.value}
 										placeholder={value}
@@ -60,7 +64,7 @@ const NewPopUp = (props) => {
 											handleChange(e);
 										}}
 									/>
-								</>
+								</div>
 							);
 						}
 						if (props.types[index] === "description") {
@@ -76,19 +80,6 @@ const NewPopUp = (props) => {
 										onChange={(e) => {
 											handleChange(e);
 										}}
-									/>
-								</>
-							);
-						}
-						if (props.types[index] === "list") {
-							return (
-								<>
-									{errors[value] && <p className='formError'>{errors[value]}</p>}
-									{/* <label>selector</label> */}
-									<Selector key={index}
-										default={value}
-										addresses={["4 B Blue Ridge Blvd, Brighton, MI", "8 W Cerritos Ave #54, Bridgeport, NJ", "7 W Jackson Blvd, San Jose, CA", "3 Mcauley Dr, Ashland, OH", "228 Runamuck Pl #2808, Baltimore, MD", "2371 Jerrold Ave, Kulpsville, PA"]}
-										editable={true}
 									/>
 								</>
 							);

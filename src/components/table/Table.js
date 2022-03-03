@@ -13,7 +13,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 	const [searchValue, setSearchValue] = useState("");
 
 	// search by is the attribute that is being compared in search
-	const [searchBy, setSearchBy] = useState(template.dataKeys[0]);
+	const [searchBy, setSearchBy] = useState(template.dataKeys[1]);
 
 	// function handles search filtering
 	function searchHandler(value) {
@@ -108,8 +108,8 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 
 	// on data change
 	useEffect(() => {
-		cancelEdit()
-		cancelDeletePrompt()
+		cancelEdit();
+		cancelDeletePrompt();
 		setTableSearchData(tableData);
 		setSearchValue("");
 	}, [tableData]);

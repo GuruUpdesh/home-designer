@@ -4,7 +4,6 @@
 	background-color: var(--clr-primary-bg);
 	padding-bottom: 36px;
 	border-radius: 20px;
-	overflow: hidden;
 	filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.644));
 	margin-bottom: 3vh;
 
@@ -144,7 +143,7 @@
 
 .tableWrapper {
 	max-height: 80vh;
-	overflow-x: scroll;
+	// overflow-x: scroll;
 	@media (max-height: 900px) {
 		scroll-snap-type: y mandatory;
 	}
@@ -476,6 +475,11 @@
 
 		opacity: 0;
 		animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+	}
+
+	.inputError {
+		background-color: #292424 !important;
+		outline: 1px solid rgba(255, 0, 0, 0.226);
 	}
 
 	button {

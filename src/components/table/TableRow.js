@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
+import useEscape from "../../hooks/useEscape";
 import Checkbox from "./tableRowComponents/Checkbox";
 import Selector from "./tableRowComponents/Selector";
 
@@ -32,24 +33,41 @@ const TableRow = (props) => {
 				}
 			}
 		}
-		return errors
+		return {};
 	}
 
 	function handleSubmit() {
-		const validation = validateEdit();
-		setErrors(validation);
-		// alert("edit")
-		props.editRow(props.index, values)
+		// const validation = validateEdit();
+		// setErrors(validation);
+		// if (Object.keys(validation).length === 0) {
+		// }
+		props.editRow(props.index, values);
 	}
 
 	function handleDelete() {
-		props.deleteRow(props.index, values.id)
+		props.deleteRow(props.index, values.id);
 	}
+
+	const editable = useRef(props.editable);
+	useEffect(() => {
+		editable.current = props.editable;
+	}, [props.editable]);
+
+	useEscape(() => {
+		console.log();
+		if (props.index === editable.current) {
+			props.cancelEdit();
+		}
+		props.cancelDeletePrompt();
+	});
 
 	return props.index !== props.editable ? (
 		<tr className={props.index === props.isDeletePromptOpen ? "edit" : ""}>
 			{props.data.map((object, index) => {
-				if (object.type.toLowerCase() === "text" || object.type.toLowerCase() === "description") {
+				if (
+					object.type.toLowerCase() === "text" ||
+					object.type.toLowerCase() === "description"
+				) {
 					return <td key={index}>{object.value}</td>;
 				}
 				if (object.type.toLowerCase() === "checkbox") {
@@ -72,6 +90,10 @@ const TableRow = (props) => {
 						</td>
 					);
 				}
+
+				if (object.type.toLowerCase() === "id") {
+					return <td key={index}>{object.value}</td>;
+				}
 				return <td>error</td>;
 			})}
 			{props.index === props.isDeletePromptOpen ? (
@@ -86,9 +108,13 @@ const TableRow = (props) => {
 						</button>
 					</td>
 					<td>
-						<button className='delete' onClick={() => {
-							handleDelete()
-						}}>delete</button>
+						<button
+							className='delete'
+							onClick={() => {
+								handleDelete();
+							}}>
+							delete
+						</button>
 					</td>
 				</>
 			) : (
@@ -119,8 +145,10 @@ const TableRow = (props) => {
 					return (
 						<td key={index}>
 							<input
-								className="editInput"
-								className={errors[value.attribute] ? 'editInput invalid' : 'editInput '}
+								className='editInput'
+								className={
+									errors[value.attribute] ? "editInput invalid" : "editInput "
+								}
 								type='text'
 								value={values[value.attribute]}
 								name={value.attribute}
@@ -133,12 +161,18 @@ const TableRow = (props) => {
 						</td>
 					);
 				}
+
+				if (value.type.toLowerCase() === "id") {
+					return <td key={index}>{values[value.attribute]}</td>;
+				}
 				if (value.type.toLowerCase() === "description") {
 					return (
 						<td key={index}>
 							<textarea
-								className="editInput"
-								className={errors[value.attribute] ? 'editInput invalid' : 'editInput '}
+								className='editInput'
+								className={
+									errors[value.attribute] ? "editInput invalid" : "editInput "
+								}
 								type='text'
 								value={values[value.attribute]}
 								name={value.attribute}
@@ -176,14 +210,16 @@ const TableRow = (props) => {
 			<td>
 				<button
 					onClick={() => {
-						setErrors({})
+						setErrors({});
 						props.cancelEdit();
 					}}>
 					cancel
 				</button>
 			</td>
 			<td>
-				<button className='confirm' onClick={handleSubmit}>edit</button>
+				<button className='confirm' onClick={handleSubmit}>
+					edit
+				</button>
 			</td>
 		</tr>
 	);

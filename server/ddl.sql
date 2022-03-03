@@ -9,11 +9,9 @@ CREATE TABLE Clients (
     clientID int (11) auto_increment unique not Null ,
     name varchar(255) not Null, 
     email varchar(320) not Null, 
-    phone varchar(10) not Null,
+    phone varchar(15) not Null,
     PRIMARY KEY (`clientID`)
 );
-
-
 
 CREATE TABLE Addresses (
     addressID int (255) auto_increment unique not Null,
@@ -75,16 +73,18 @@ CREATE TABLE Projects_Employees (
 );
 
 
-INSERT INTO Clients (name,email,phone) values ('jin yang', 'smiths@hello.com', '231');
-INSERT INTO Clients (name,email,phone) values ('jack barker', 'miths@hello.com', '31');
+INSERT INTO Clients (name,email,phone) values ('Josephine Darakjy', 'josephine_darakjy@darakjy.org', '810-292-9388');
+INSERT INTO Clients (name,email,phone) values ('Art Venere', 'art@venere.org', '856-636-8749');
+INSERT INTO Clients (name,email,phone) values ('Lenna Paprocki', 'lpaprocki@hotmail.com', '907-385-4412');
+
 
 
 INSERT INTO Addresses (`address`,`isComplete`,`dateStarted`,`dateComplete`,`cID`) values (
-    '32221 FL Jacksonville second street',
+    '4 B Blue Ridge Blvd, Brighton, MI',
     'false',
     DATE '2015-11-17',
     DATE '2015-12-17',
-     (SELECT clientID FROM Clients WHERE name = 'jin yang')
+     (SELECT clientID FROM Clients WHERE name = 'Josephine Darakjy')
 );
 
 INSERT INTO Addresses (`address`,`isComplete`,`dateStarted`,`dateComplete`,`cID`) values (
@@ -92,7 +92,7 @@ INSERT INTO Addresses (`address`,`isComplete`,`dateStarted`,`dateComplete`,`cID`
     'false',
     DATE '2015-11-17',
     DATE '2015-12-17',
-     (SELECT clientID FROM Clients WHERE name = 'jack barker')
+     (SELECT clientID FROM Clients WHERE name = 'Art Venere')
 );
 
 INSERT INTO Employees (`name`,`email`,`billingRate`,`isCurrentEmployee`) values (

@@ -2,23 +2,12 @@ import React, { useState, useEffect } from "react";
 import Table from "../components/table/Table";
 
 const Clients = () => {
-	const [clientContent, setClientContent] = useState({
-		title: "Clients",
-		entity: "client",
-		template: {
-			attributes: ["id", "name", "email", "phone"],
-			dataKeys: ["clientID", "name", "email", "phone"],
-			dataTypes: ["text", "text", "text", "text"],
-		},
-		tableData: [],
-	});
-
 	const title = "Clients";
 	const entity = "client";
 	const template = {
-		attributes: ["id", "name", "email", "phone"],
-		dataKeys: ["clientID", "name", "email", "phone"],
-		dataTypes: ["text", "text", "text", "text"],
+		attributes: ["id", "name", "email", "phone", "addresses"],
+		dataKeys: ["clientID", "name", "email", "phone","addresses"],
+		dataTypes: ["id", "text", "text", "text", "list"],
 	};
 	const [tableData, setTableData] = useState([]);
 
@@ -27,8 +16,8 @@ const Clients = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(clientContent);
-	}, [clientContent]);
+		console.log(tableData);
+	}, [tableData]);
 
 	const getClientRows = async () => {
 		await fetch("http://flip1.engr.oregonstate.edu:5392/api/clients", {
@@ -94,7 +83,6 @@ const Clients = () => {
 	return (
 		<div className='clients'>
 			<Table
-				tableContent={clientContent}
 				title={title}
 				entity={entity}
 				template={template}

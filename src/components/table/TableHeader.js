@@ -33,7 +33,7 @@ const TableHeader = (props) => {
 				{isFilterOpen && (
 					<ul>
 						{props.attributes.map((attribute, index) => {
-							if (props.types[index] !== "checkbox") {
+							if (props.types[index] !== "checkbox" && props.types[index] !== "id") {
 								return (
 									<li key={index}>
 										<button
