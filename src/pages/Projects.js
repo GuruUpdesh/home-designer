@@ -5,9 +5,10 @@ const Projects = () => {
 	const title = "Projects"
 	const entity = "project"
 	const template = {
-		attributes: ["name", "address", "date started", "complete", "description"],
-		dataKeys: ["name", "aID", "dateStarted", "isComplete", "projectDescription"],
-		dataTypes: ["text", "text", "text", "checkbox", "description"],
+		attributes: ["id", "name", "address", "status", "date started", "date complete", "description"],
+		dataKeys: ["projectID", "name", "aID", "status", "dateStarted", "dateComplete", "projectDescription"],
+		dataTypes: ["text", "text", "text", "status", "text", "text", "description"],
+		create: ["none", "text", "select", "none", "none", "none", "textArea"]
 	}
 
 	const [tableData, setTableData] = useState([]);
@@ -17,7 +18,7 @@ const Projects = () => {
 	}, []);
 
 	const getProjectRows = async () => {
-		await fetch("http://flip1.engr.oregonstate.edu:5392/api/projects", {
+		await fetch("http://localhost:5392/api/projects", {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -28,9 +29,30 @@ const Projects = () => {
 		});
 	};
 
+	const addProject = async (values) => {
+		console.log(values)
+		await fetch("http://localhost:5392/api/projects", {
+			method: "PUT",
+			body: JSON.stringify({
+				name: values.name,
+				aID: values.address,
+				projectDescription: values.description
+			}),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).then((response) => {
+			if (response.status === 200) {
+				response.json().then((data) => {
+					setTableData(data);
+				});
+			}
+		});
+	}
+
 	return (
 		<div className='clients'>
-			<Table title={title} entity={entity} template={template} tableData={tableData}/>
+			<Table title={title} entity={entity} template={template} tableData={tableData} addRow={addProject}/>
 		</div>
 	);
 };

@@ -1,0 +1,19 @@
+.status {
+    list-style: none;
+    li {
+        background-color: red;
+        max-width: fit-content;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+    }
+
+    .green {
+        background-color: rgb(47, 151, 47);
+    }
+    .grey {
+        background-color: var(--clr-grey);
+    }
+    .orange {
+        background-color: rgb(211, 121, 37);
+    }
+}

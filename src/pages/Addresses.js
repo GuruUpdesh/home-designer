@@ -5,9 +5,10 @@ const Addresses = () => {
 	const title = "Addresses";
 	const entity = "address";
 	const template = {
-		attributes: ["id", "address", "client", "complete", "date started", "date complete", "projects"],
-		dataKeys: ["addressID", "address", "cID", "", "dateStarted", "dateComplete", "projects"],
-		dataTypes: ["id", "text", "text", "checkbox", "text", "text", "list"],
+		attributes: ["id", "address", "client", "status", "date started", "date complete", "projects"],
+		dataKeys: ["addressID", "address", "cID", "status", "dateStarted", "dateComplete", "projects"],
+		dataTypes: ["id", "text", "text", "status", "text", "text", "list"],
+		create: ["none", "text", "select", "none", "none", "none", "none"]
 	};
 
 	const [tableData, setTableData] = useState([]);
@@ -16,8 +17,12 @@ const Addresses = () => {
 		getAddressRows();
 	}, []);
 
+	useEffect(() => {
+		console.log(tableData)
+	}, [tableData]);
+
 	const getAddressRows = async () => {
-		await fetch("http://flip1.engr.oregonstate.edu:5392/api/addresses", {
+		await fetch("http://localhost:5392/api/addresses", {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -30,7 +35,7 @@ const Addresses = () => {
 
 	const addAddress = async (values) => {
 		console.log(values)
-		await fetch("http://flip1.engr.oregonstate.edu:5392/api/addresses", {
+		await fetch("http://localhost:5392/api/addresses", {
 			method: "PUT",
 			body: JSON.stringify({
 				address: values.address,

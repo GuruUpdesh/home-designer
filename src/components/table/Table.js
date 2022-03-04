@@ -190,6 +190,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 					closeNew={closeNew}
 					values={template.attributes}
 					types={template.dataTypes}
+					create={template.create}
 					addRow={addRow}
 				/>
 			)}

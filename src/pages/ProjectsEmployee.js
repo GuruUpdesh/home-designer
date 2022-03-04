@@ -1,36 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../components/table/Table";
 
 const ProjectsEmployee = () => {
+	const title = "Projects & Employees";
+	const entity = "project employee relationship";
+	const template = {
+		attributes: ["id", "project", "employee"],
+		dataKeys: ["projectEmployeeID", "pID", "eID"],
+		dataTypes: ["id", "text", "text"],
+		create: ["none", "text", "text"]
+	};
+
+	const [tableData, setTableData] = useState([]);
+
+    useEffect(() => {
+		getProjectsEmployeeRows();
+	}, []);
+
+    const getProjectsEmployeeRows = async () => {
+        await fetch("http://localhost:5392/api/projects-employees", {
+			method: "GET",
+		}).then((response) => {
+			if (response.status === 200) {
+				response.json().then((data) => {
+					setTableData(data);
+				});
+			}
+		});
+    }
+
 	return (
 		<div className='clients'>
-			<Table tableContent={ProjectEmployeeContent} />
+			<Table title={title} entity={entity} template={template} tableData={tableData}/>
 		</div>
 	);
 };
 
 export default ProjectsEmployee;
-
-const ProjectEmployeeContent = {
-	title: "Projects & Employees",
-	entity: "project employee relationship",
-	template: {
-		attributes: ["project", "employee"],
-		dataKeys: ["project", "employee"],
-		dataTypes: ["text", "text"],
-	},
-    tableData: [
-        {
-            project: "kitchen",
-            employee: "Dinesh Chungtai",
-        },
-        {
-            project: "living room",
-            employee: "Richard Hendricks",
-        },
-        {
-            project: "guest bedroom",
-            employee: "Jared Dunn",
-        },
-    ]
-};

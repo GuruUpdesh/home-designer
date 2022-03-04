@@ -3,7 +3,8 @@ import { IoClose } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import useEscape from "../../hooks/useEscape";
 import Checkbox from "./tableRowComponents/Checkbox";
-import Selector from "./tableRowComponents/Selector";
+import List from "./tableRowComponents/List";
+import Status from "./tableRowComponents/Status";
 
 const TableRow = (props) => {
 	const [values, setValues] = useState({});
@@ -68,21 +69,25 @@ const TableRow = (props) => {
 					object.type.toLowerCase() === "text" ||
 					object.type.toLowerCase() === "description"
 				) {
-					return <td key={index}>{object.value}</td>;
+					if (object.value) {
+						if (object.attribute === "billing rate") {
+							return <td key={index}><span className="null">$</span>{object.value}<span className="null">/hr</span></td>;
+						}
+						return <td key={index}>{object.value}</td>;
+					}
+					return <td key={index} className="null">null</td>
 				}
-				if (object.type.toLowerCase() === "checkbox") {
+				if (object.type.toLowerCase() === "status") {
 					return (
 						<td key={index}>
-							<div className='checkboxContainer'>
-								<Checkbox />
-							</div>
+							<Status status={object.value} edit={false}/>
 						</td>
 					);
 				}
 				if (object.type.toLowerCase() === "list") {
 					return (
 						<td className='list' key={index}>
-							<Selector
+							<List
 								default={object.attribute}
 								addresses={object.value}
 								editable={props.index === props.editable}
@@ -185,19 +190,17 @@ const TableRow = (props) => {
 						</td>
 					);
 				}
-				if (value.type.toLowerCase() === "checkbox") {
+				if (value.type.toLowerCase() === "status") {
 					return (
 						<td key={index}>
-							<div className='checkboxContainer'>
-								<Checkbox />
-							</div>
+							<Status status={values[value.attribute]} edit={true}/>
 						</td>
 					);
 				}
 				if (value.type.toLowerCase() === "list") {
 					return (
 						<td className='list' key={index}>
-							<Selector
+							<List
 								default={value.attribute}
 								addresses={value.value}
 								editable={props.index === props.editable}

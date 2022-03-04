@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import {HiPlus} from "react-icons/hi"
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 const TableHeader = (props) => {
@@ -50,7 +51,7 @@ const TableHeader = (props) => {
 					</ul>
 				)}
 			</div>
-			<button onClick={props.openNew}>new</button>
+			<button onClick={props.openNew}><HiPlus /></button>
 		</div>
 	);
 };

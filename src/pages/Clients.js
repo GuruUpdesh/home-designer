@@ -8,6 +8,7 @@ const Clients = () => {
 		attributes: ["id", "name", "email", "phone", "addresses"],
 		dataKeys: ["clientID", "name", "email", "phone","addresses"],
 		dataTypes: ["id", "text", "text", "text", "list"],
+		create: ["none", "text", "text", "text", "none"]
 	};
 	const [tableData, setTableData] = useState([]);
 
@@ -20,7 +21,7 @@ const Clients = () => {
 	}, [tableData]);
 
 	const getClientRows = async () => {
-		await fetch("http://flip1.engr.oregonstate.edu:5392/api/clients", {
+		await fetch("http://localhost:5392/api/clients", {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -32,7 +33,7 @@ const Clients = () => {
 	};
 
 	const addClient = async (values) => {
-		await fetch("http://flip1.engr.oregonstate.edu:5392/api/clients", {
+		await fetch("http://localhost:5392/api/clients", {
 			method: "PUT",
 			body: JSON.stringify({ name: values.name, email: values.email, phone: values.phone }),
 			headers: {
@@ -49,7 +50,7 @@ const Clients = () => {
 
 	const editClientRow = async (index, values) => {
 		console.log(values)
-		await fetch("http://flip1.engr.oregonstate.edu:5392/api/clients", {
+		await fetch("http://localhost:5392/api/clients", {
 			method: "POST",
 			body: JSON.stringify({ id: values.id, name: values.name, email: values.email, phone: values.phone }),
 			headers: {
@@ -68,7 +69,7 @@ const Clients = () => {
 	};
 
 	const deleteClientRow = async (index, id) => {
-		await fetch("http://flip1.engr.oregonstate.edu:5392/api/clients", {
+		await fetch("http://localhost:5392/api/clients", {
 			method: "DELETE",
 			body: JSON.stringify({ id: id }),
 			headers: {
