@@ -20,8 +20,9 @@ const Selector = (props) => {
             setSelected(props.value)
 			props.handleSelector(props.value, id)
         } else {
-            setSelected(name);
+			setSelected(name);
 			props.handleSelector(props.value, id)
+			setIsDropDownOpen(false)
         }
 	}
 
@@ -31,7 +32,7 @@ const Selector = (props) => {
 	}, []);
 
 	const getRelationship = async () => {
-		await fetch("http://localhost:5392/api/one", {
+		await fetch(`${process.env.REACT_APP_API_URL}/one`, {
 			method: "POST",
 			body: JSON.stringify({
 				table: props.value,

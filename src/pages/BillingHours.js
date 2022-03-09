@@ -18,7 +18,7 @@ const BillingHours = () => {
 	}, []);
 
 	const getBillingHoursRows = async () => {
-		await fetch("http://localhost:5392/api/billing-hours", {
+		await fetch(`${process.env.REACT_APP_API_URL}/billing-hours`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {

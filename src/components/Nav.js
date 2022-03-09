@@ -75,7 +75,7 @@ const Nav = (props) => {
 						<span>employees</span>
 					</button>
 				</li>
-				<li>
+				{/* <li>
 					<button
 						className={props.activeButton === "billing-hours" ? "activeBtn" : ""}
 						onClick={() => {
@@ -86,7 +86,7 @@ const Nav = (props) => {
 						<FaMoneyBillWaveAlt />
 						<span>billing hours</span>
 					</button>
-				</li>
+				</li> */}
 			</ul>
 		</nav>
 	);

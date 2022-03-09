@@ -2,14 +2,30 @@ import React, { useState, useEffect } from "react";
 import Table from "../components/table/Table";
 
 const Projects = () => {
-	const title = "Projects"
-	const entity = "project"
+	const title = "Projects";
+	const entity = "project";
 	const template = {
-		attributes: ["id", "name", "address", "status", "date started", "date complete", "description"],
-		dataKeys: ["projectID", "name", "aID", "status", "dateStarted", "dateComplete", "projectDescription"],
-		dataTypes: ["text", "text", "text", "status", "text", "text", "description"],
-		create: ["none", "text", "select", "none", "none", "none", "textArea"]
-	}
+		attributes: [
+			"id",
+			"name",
+			"address",
+			"status",
+			"date started",
+			"date complete",
+			"description",
+		],
+		dataKeys: [
+			"projectID",
+			"name",
+			"aID",
+			"status",
+			"dateStarted",
+			"dateComplete",
+			"projectDescription",
+		],
+		dataTypes: ["id", "text", "select", "status", "date", "date", "description"],
+		create: ["none", "text", "select", "none", "none", "none", "textArea"],
+	};
 
 	const [tableData, setTableData] = useState([]);
 
@@ -18,7 +34,7 @@ const Projects = () => {
 	}, []);
 
 	const getProjectRows = async () => {
-		await fetch("http://localhost:5392/api/projects", {
+		await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -30,13 +46,13 @@ const Projects = () => {
 	};
 
 	const addProject = async (values) => {
-		console.log(values)
-		await fetch("http://localhost:5392/api/projects", {
+		console.log(values);
+		await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
 			method: "PUT",
 			body: JSON.stringify({
 				name: values.name,
 				aID: values.address,
-				projectDescription: values.description
+				projectDescription: values.description,
 			}),
 			headers: {
 				"Content-Type": "application/json",
@@ -48,11 +64,32 @@ const Projects = () => {
 				});
 			}
 		});
-	}
+	};
+
+	const deleteProjectRow = async (index, id) => {
+		await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+			method: "DELETE",
+			body: JSON.stringify({ id: id }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).then((response) => {
+			if (response.status === 200) {
+				getProjectRows();
+			}
+		});
+	};
 
 	return (
 		<div className='clients'>
-			<Table title={title} entity={entity} template={template} tableData={tableData} addRow={addProject}/>
+			<Table
+				title={title}
+				entity={entity}
+				template={template}
+				tableData={tableData}
+				addRow={addProject}
+				deleteRow={deleteProjectRow}
+			/>
 		</div>
 	);
 };

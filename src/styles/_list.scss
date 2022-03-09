@@ -7,9 +7,7 @@
 	text-align: center;
 	border-radius: 20px;
 	user-select: none;
-	// max-width: 20ch;
 	white-space: nowrap;
-	// overflow: hidden;
 
 	&:hover {
 		.selector {
@@ -19,8 +17,6 @@
 
 	.selector {
 		text-align: left;
-		// padding: 0.4rem 1rem;
-		// text-decoration: underline;
 
 		svg {
 			float: right;
@@ -30,50 +26,9 @@
 	ul {
 		list-style: none;
 		text-align: left;
-
-		// .selected {
-		// 	background-color: $primary;
-		// }
-
-		// li {
-		// 	padding-top: 5px;
-		// 	padding-bottom: 5px;
-		// 	font-weight: normal;
-		// 	min-height: 15px;
-		// 	min-width: 100%;
-		// 	cursor: pointer;
-		// }
 	}
 }
 
-// .active {
-// 	position: absolute;
-// 	outline: 2px solid $primary;
-// 	background-color: inherit !important;
-// 	z-index: 1000000;
-// 	top: 25%;
-// 	box-shadow: 3px 3px 40px 20px var(--clr-grey);
-
-// 	li {
-// 		position: relative;
-// 		padding: 1rem;
-// 		margin-bottom: 3px;
-// 		padding-left: 5px;
-// 		overflow: hidden;
-// 		border-radius: 0 20px 20px 0;
-
-// 		// &:hover {
-// 		// 	z-index: 10000000;
-// 		// 	background-color: $primary;
-// 		// 	width: fit-content;
-// 		// 	overflow: visible !important;
-// 		// }
-
-// 		&:last-child:hover {
-// 			background-color: transparent;
-// 		}
-// 	}
-// }
 
 tr .list {
     max-width: min-content;

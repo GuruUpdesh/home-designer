@@ -8,17 +8,17 @@ const ProjectsEmployee = () => {
 		attributes: ["id", "project", "employee"],
 		dataKeys: ["projectEmployeeID", "pID", "eID"],
 		dataTypes: ["id", "text", "text"],
-		create: ["none", "text", "text"]
+		create: ["none", "text", "text"],
 	};
 
 	const [tableData, setTableData] = useState([]);
 
-    useEffect(() => {
+	useEffect(() => {
 		getProjectsEmployeeRows();
 	}, []);
 
-    const getProjectsEmployeeRows = async () => {
-        await fetch("http://localhost:5392/api/projects-employees", {
+	const getProjectsEmployeeRows = async () => {
+		await fetch(`${process.env.REACT_APP_API_URL}/projects-employees`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -27,11 +27,31 @@ const ProjectsEmployee = () => {
 				});
 			}
 		});
-    }
+	};
+
+	const deleteProjectsEmployeesRow = async (index, id) => {
+		await fetch(`${process.env.REACT_APP_API_URL}/projects-employees`, {
+			method: "DELETE",
+			body: JSON.stringify({ id: id }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).then((response) => {
+			if (response.status === 200) {
+				getProjectsEmployeeRows();
+			}
+		});
+	};
 
 	return (
 		<div className='clients'>
-			<Table title={title} entity={entity} template={template} tableData={tableData}/>
+			<Table
+				title={title}
+				entity={entity}
+				template={template}
+				tableData={tableData}
+				deleteRow={deleteProjectsEmployeesRow}
+			/>
 		</div>
 	);
 };

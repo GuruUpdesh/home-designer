@@ -8,7 +8,7 @@ const Employees = () => {
 		attributes: ["id", "name", "email", "billing rate"],
 		dataKeys: ["employeeID", "name", "email", "billingRate"],
 		dataTypes: ["id", "text", "text", "text"],
-		create: ["none", "text", "text", "text"]
+		create: ["none", "text", "text", "text"],
 	};
 	const [tableData, setTableData] = useState([]);
 
@@ -17,7 +17,7 @@ const Employees = () => {
 	}, []);
 
 	const getEmployeeRows = async () => {
-		await fetch("http://localhost:5392/api/employees", {
+		await fetch(`${process.env.REACT_APP_API_URL}/employees`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -29,13 +29,13 @@ const Employees = () => {
 	};
 
 	const addEmployee = async (values) => {
-		console.log(values)
-		await fetch("http://localhost:5392/api/employees", {
+		console.log(values);
+		await fetch(`${process.env.REACT_APP_API_URL}/employees`, {
 			method: "PUT",
 			body: JSON.stringify({
 				name: values.name,
 				email: values.email,
-				billingRate: values['billing rate'],
+				billingRate: values["billing rate"],
 			}),
 			headers: {
 				"Content-Type": "application/json",
@@ -47,10 +47,31 @@ const Employees = () => {
 				});
 			}
 		});
-	}
+	};
+
+	const deleteEmployeeRow = async (index, id) => {
+		await fetch(`${process.env.REACT_APP_API_URL}/employees`, {
+			method: "DELETE",
+			body: JSON.stringify({ id: id }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).then((response) => {
+			if (response.status === 200) {
+				getEmployeeRows();
+			}
+		});
+	};
 	return (
 		<div className='clients'>
-			<Table title={title} entity={entity} template={template} tableData={tableData} addRow={addEmployee}/>
+			<Table
+				title={title}
+				entity={entity}
+				template={template}
+				tableData={tableData}
+				addRow={addEmployee}
+				deleteRow={deleteEmployeeRow}
+			/>
 		</div>
 	);
 };

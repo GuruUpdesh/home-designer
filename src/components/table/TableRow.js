@@ -2,9 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import useEscape from "../../hooks/useEscape";
-import Checkbox from "./tableRowComponents/Checkbox";
+import DatePicker from "react-date-picker/dist/entry.nostyle";
 import List from "./tableRowComponents/List";
 import Status from "./tableRowComponents/Status";
+import Selector from "./New/Selector";
 
 const TableRow = (props) => {
 	const [values, setValues] = useState({});
@@ -22,6 +23,13 @@ const TableRow = (props) => {
 		setValues({
 			...values,
 			[name]: value,
+		});
+	};
+
+	const handleDateChange = (value, attribute) => {
+		setValues({
+			...values,
+			[attribute]: value,
 		});
 	};
 
@@ -67,20 +75,37 @@ const TableRow = (props) => {
 			{props.data.map((object, index) => {
 				if (
 					object.type.toLowerCase() === "text" ||
-					object.type.toLowerCase() === "description"
+					object.type.toLowerCase() === "description" ||
+					object.type.toLowerCase() === "date" ||
+					object.type.toLowerCase() === "select"
 				) {
 					if (object.value) {
 						if (object.attribute === "billing rate") {
-							return <td key={index}><span className="null">$</span>{object.value}<span className="null">/hr</span></td>;
+							return (
+								<td key={index}>
+									<span className='dollar'>$</span>
+									{object.value}
+									<span className='dollar rate'>/hr</span>
+								</td>
+							);
 						}
 						return <td key={index}>{object.value}</td>;
 					}
-					return <td key={index} className="null">null</td>
+					return (
+						<td key={index} className='null'>
+							null
+						</td>
+					);
 				}
 				if (object.type.toLowerCase() === "status") {
 					return (
 						<td key={index}>
-							<Status status={object.value} edit={false}/>
+							<Status
+								status={object.value}
+								edit={false}
+								values={values}
+								setValues={setValues}
+							/>
 						</td>
 					);
 				}
@@ -150,7 +175,6 @@ const TableRow = (props) => {
 					return (
 						<td key={index}>
 							<input
-								className='editInput'
 								className={
 									errors[value.attribute] ? "editInput invalid" : "editInput "
 								}
@@ -166,7 +190,26 @@ const TableRow = (props) => {
 						</td>
 					);
 				}
-
+				if (value.type.toLowerCase() === "date") {
+					let date = new Date(values[value.attribute]);
+					return (
+						<td key={index} className='editDate'>
+							<DatePicker
+								value={date}
+								onChange={(result) => handleDateChange(result, value.attribute)}
+								format='MM/dd/y'
+								minDate={new Date("2010-01-02")}
+							/>
+						</td>
+					);
+				}
+				if (value.type.toLowerCase() === "select") {
+					return (
+						<td>
+							<Selector value={value.attribute}/>
+						</td>
+					);
+				}
 				if (value.type.toLowerCase() === "id") {
 					return <td key={index}>{values[value.attribute]}</td>;
 				}
@@ -174,7 +217,6 @@ const TableRow = (props) => {
 					return (
 						<td key={index}>
 							<textarea
-								className='editInput'
 								className={
 									errors[value.attribute] ? "editInput invalid" : "editInput "
 								}
@@ -193,7 +235,12 @@ const TableRow = (props) => {
 				if (value.type.toLowerCase() === "status") {
 					return (
 						<td key={index}>
-							<Status status={values[value.attribute]} edit={true}/>
+							<Status
+								status={values[value.attribute]}
+								edit={true}
+								values={values}
+								setValues={setValues}
+							/>
 						</td>
 					);
 				}

@@ -1,19 +1,101 @@
 .status {
-    list-style: none;
-    li {
-        background-color: red;
-        max-width: fit-content;
-        padding: 0.5rem 1rem;
-        border-radius: 1rem;
-    }
+	max-width: fit-content;
+	white-space: nowrap;
+	font-size: 10.5px;
+	top: 22%;
+	position: absolute;
+	list-style: none;
+	background-color: var(--clr-grey);
+	border-radius: 10px;
+	overflow: hidden;
+    
+	ul {
+        overflow: hidden;
+	}
+
+	li {
+		padding: 0.7rem;
+		user-select: none;
+		position: relative;
+		overflow: hidden;
+        transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+		&:after {
+			content: "";
+			width: 1000%;
+			left: 0;
+			height: 1px;
+			position: absolute;
+			background-color: rgba(255, 255, 255, 0.123);
+			z-index: 10000;
+			top: 0;
+		}
+
+		transform: translateX(-15px);
+		opacity: 0;
+		animation: list 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+
+		&:first-child {
+			&:after {
+				width: 0;
+			}
+
+			transform: translateX(0px);
+			opacity: 1;
+			animation: none;
+		}
+
+		$n: 3;
+
+		@for $x from 2 through $n {
+			&:nth-child(#{$x}) {
+				animation-delay: 100ms * ($x - 1) - ($x * 10);
+			}
+		}
+	}
+
+	svg {
+        color: white !important;
+		float: right;
+	}
 
     .green {
-        background-color: rgb(47, 151, 47);
+        color: rgb(36, 187, 36);
     }
-    .grey {
-        background-color: var(--clr-grey);
-    }
+
     .orange {
-        background-color: rgb(211, 121, 37);
+        color: rgb(248, 139, 37);
+    }
+
+    .grey {
+        color: rgb(56, 120, 216);
+    }
+}
+
+.editableStatus {
+    z-index: 1000000;
+    li {
+        cursor: pointer;
+	}
+}
+
+.activeStatus {
+    // outline: .2px solid $primary;
+    outline-offset: 1px;
+    box-shadow: 3px 3px 20px var(--clr-grey);
+
+    .green:hover {
+        color: white;
+        background-color: rgb(36, 187, 36);
+    }
+
+    .orange:hover {
+        color: white;
+        background-color: rgb(248, 139, 37);
+    }
+
+    .grey:hover {
+        color: white;
+        background-color: rgb(44, 44, 73);
     }
 }

@@ -2,7 +2,6 @@
   "name": "home-designer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://web.engr.oregonstate.edu/~singguru/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
@@ -10,6 +9,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "react": "^17.0.2",
+    "react-date-picker": "^8.4.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.1",

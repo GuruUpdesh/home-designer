@@ -2,37 +2,21 @@
 	z-index: 101;
 	position: absolute;
 	top: 0;
-	// top: 50%;
 	left: 50%;
 	transform: translate(-50%, 0);
 	color: white;
-	background-color: var(--clr-grey-dark);
+	// background-color: var(--clr-grey-dark);
+	background-image: linear-gradient(45deg,  rgb(19, 19, 19) 0%,  var(--clr-grey-dark) 100%);
 	padding: 1rem 5rem;
 	border-radius: 30px;
-	box-shadow: 0px 1px 5px rgba(255, 255, 255, 0.096);
+	box-shadow: 0px 1px 15px rgba(3, 3, 3, 0.267);
+	outline: 1px solid rgba(255, 255, 255, 0.082);
 
-	// .dropDown {
-	// 	position: relative;
-	// 	width: 100%;
-	// 	max-width: none;
-	// 	margin-bottom: 2rem;
-	// 	overflow: hidden;
-
-	// 	ul {
-	// 		max-height: 10rem;
-	// 		overflow-y: scroll;
-	// 	}
-
-	// 	li {
-	// 		border-radius: 0;
-	// 	}
+	// .formError{
+	// 	font-size: 11px;
+	// 	margin-bottom: 3px;
+	// 	color: red;
 	// }
-
-	.formError{
-		font-size: 11px;
-		margin-bottom: 3px;
-		color: red;
-	}
 
 	.newContentWrapper {
 		display: flex;
@@ -44,30 +28,38 @@
 	h1 {
 		text-transform: capitalize;
 		margin-bottom: 1rem;
+
+		animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 	}
 
 	textarea {
 		display: block;
-		margin-bottom: .5rem;
+		margin-bottom: 1rem;
 		opacity: 0;
 		animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 		padding: .5rem 2rem;
+		outline: 1px solid rgba(255, 255, 255, 0.12);
+
 	}
 
-	input {
-		display: block;
-		border-radius: 30px;
-		padding: 1rem 2rem;
-		margin-bottom: 0.5rem;
+	// input {
+	// 	display: block;
+	// 	border-radius: 30px;
+	// 	padding: 1rem 2rem;
+	// 	margin-bottom: 0.5rem;
+	// 	outline: 1px solid rgba(255, 255, 255, 0.12);
+	// 	opacity: 0;
+	// 	animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 
-		opacity: 0;
-		animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
-	}
+	// 	&:focus-visible {
+    //         box-shadow: 0px 0px 10px rgba(166, 59, 253, 0.445);
+	// 	}
+	// }
 
-	.inputError {
-		background-color: #292424 !important;
-		outline: 1px solid rgba(255, 0, 0, 0.226);
-	}
+	// .inputError {
+	// 	background-color: #292424 !important;
+	// 	outline: 1px solid rgba(255, 0, 0, 0.226);
+	// }
 
 	button {
 		display: block;
@@ -76,6 +68,7 @@
 		width: calc(var(--size-btn) * 3);
 		height: var(--size-btn);
 		transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+		box-shadow: -3px 5px 5px rgba(0, 0, 0, 0.158);
 
 		opacity: 0;
 		animation: fadeUp 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;

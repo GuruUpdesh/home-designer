@@ -5,7 +5,6 @@
 nav {
     left: -60px;
     
-    cursor: pointer;
     // background-color: var(--clr-bg-nav);
     backdrop-filter: blur(10px) brightness(60%);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.452);
@@ -39,6 +38,7 @@ nav {
     
     .navController{
         --clr-border: rgba(255, 255, 255, 0.199);
+        cursor: pointer;
         position: absolute;
         top: 40px;
         color: white;
@@ -103,15 +103,15 @@ nav {
         background: linear-gradient(45deg, #181818 0%, #181818 100%);
         background-color: #181818;
         box-shadow: -3px 5px 5px rgba(0, 0, 0, 0.616);
-        border: 1px solid rgba(255, 255, 255, 0.082);
+        outline: 1px solid rgba(255, 255, 255, 0.082);
         border-radius: 100%;
         transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
 
         &:hover{
             background: linear-gradient(45deg, #181818 0%, var(--clr-primary) 100%);
             transform: scale(1.1);
-            box-shadow: -3px 5px 5px #1e0e427c, 2px -3px 10px rgba(194, 120, 255, 0.185);
-            border: none;
+            box-shadow: -3px 5px 10px #13082cd0, 3px -3px 15px rgba(166, 59, 253, 0.445);
+            // border: none;
 
             svg {
                 filter: drop-shadow(-2px 2px 1px rgba(0, 0, 0, 0.301))

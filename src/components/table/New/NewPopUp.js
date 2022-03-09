@@ -59,19 +59,20 @@ const NewPopUp = (props) => {
 					<h1>new {props.entity}</h1>
 					{props.values.map((value, index) => {
 						if (props.create[index] === "text") {
+							console.log(values[value])
 							return (
-								<div key={index}>
+								<div key={index} className="inputContainer">
 									{errors[value] && <p className='formError'>{errors[value]}</p>}
 									<input
 									 	className={errors[value] ? "inputError" : ""}
 										name={value}
-										value={values.value}
-										placeholder={value}
+										// value={values.value}
 										autoComplete={"off"}
 										onChange={(e) => {
 											handleChange(e);
 										}}
 									/>
+									<span className={values[value] ? "fixedLabel floatingLabel" : "floatingLabel"}>{value}</span>
 								</div>
 							);
 						}

@@ -21,7 +21,7 @@ const Clients = () => {
 	}, [tableData]);
 
 	const getClientRows = async () => {
-		await fetch("http://localhost:5392/api/clients", {
+		await fetch(`${process.env.REACT_APP_API_URL}/clients`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -33,7 +33,7 @@ const Clients = () => {
 	};
 
 	const addClient = async (values) => {
-		await fetch("http://localhost:5392/api/clients", {
+		await fetch(`${process.env.REACT_APP_API_URL}/clients`, {
 			method: "PUT",
 			body: JSON.stringify({ name: values.name, email: values.email, phone: values.phone }),
 			headers: {
@@ -50,7 +50,7 @@ const Clients = () => {
 
 	const editClientRow = async (index, values) => {
 		console.log(values)
-		await fetch("http://localhost:5392/api/clients", {
+		await fetch(`${process.env.REACT_APP_API_URL}/clients`, {
 			method: "POST",
 			body: JSON.stringify({ id: values.id, name: values.name, email: values.email, phone: values.phone }),
 			headers: {
@@ -69,7 +69,7 @@ const Clients = () => {
 	};
 
 	const deleteClientRow = async (index, id) => {
-		await fetch("http://localhost:5392/api/clients", {
+		await fetch(`${process.env.REACT_APP_API_URL}/clients`, {
 			method: "DELETE",
 			body: JSON.stringify({ id: id }),
 			headers: {

@@ -5,10 +5,26 @@ const Addresses = () => {
 	const title = "Addresses";
 	const entity = "address";
 	const template = {
-		attributes: ["id", "address", "client", "status", "date started", "date complete", "projects"],
-		dataKeys: ["addressID", "address", "cID", "status", "dateStarted", "dateComplete", "projects"],
-		dataTypes: ["id", "text", "text", "status", "text", "text", "list"],
-		create: ["none", "text", "select", "none", "none", "none", "none"]
+		attributes: [
+			"id",
+			"address",
+			"client",
+			"status",
+			"date started",
+			"date complete",
+			"projects",
+		],
+		dataKeys: [
+			"addressID",
+			"address",
+			"cID",
+			"status",
+			"dateStarted",
+			"dateComplete",
+			"projects",
+		],
+		dataTypes: ["id", "text", "select", "status", "date", "date", "list"],
+		create: ["none", "text", "select", "none", "none", "none", "none"],
 	};
 
 	const [tableData, setTableData] = useState([]);
@@ -18,11 +34,11 @@ const Addresses = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(tableData)
+		console.log(tableData);
 	}, [tableData]);
 
 	const getAddressRows = async () => {
-		await fetch("http://localhost:5392/api/addresses", {
+		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -34,14 +50,14 @@ const Addresses = () => {
 	};
 
 	const addAddress = async (values) => {
-		console.log(values)
-		await fetch("http://localhost:5392/api/addresses", {
+		console.log(values);
+		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
 			method: "PUT",
 			body: JSON.stringify({
 				address: values.address,
 				dateStarted: values.dateStarted,
 				dateComplete: values.dateComplete,
-				cID: values.client
+				cID: values.client,
 			}),
 			headers: {
 				"Content-Type": "application/json",
@@ -54,9 +70,35 @@ const Addresses = () => {
 			}
 		});
 	};
+
+	const editAddressRow = async (index, values) => {
+		console.log(values);
+	};
+
+	const deleteAddressRow = async (index, id) => {
+		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
+			method: "DELETE",
+			body: JSON.stringify({ id: id }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).then((response) => {
+			if (response.status === 200) {
+				getAddressRows();
+			}
+		});
+	};
 	return (
 		<div className='clients'>
-			<Table title={title} entity={entity} template={template} tableData={tableData} addRow={addAddress}/>
+			<Table
+				title={title}
+				entity={entity}
+				template={template}
+				tableData={tableData}
+				addRow={addAddress}
+				editRow={editAddressRow}
+				deleteRow={deleteAddressRow}
+			/>
 		</div>
 	);
 };
