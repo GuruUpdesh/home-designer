@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+// react hook for when enter key is pressed
 const useEnter = (onEscape) => {
     useEffect(() => {
         const handleEsc = (event) => {

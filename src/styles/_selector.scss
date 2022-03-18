@@ -49,13 +49,14 @@
 	margin-bottom: 1rem;
 	// overflow: hidden;
 	div {
-		background-color: var(--clr-grey);
+		background-color: #222222;
 		width: 233px;
 		border-radius: 30px;
 		padding: 1rem 2rem;
 		cursor: pointer;
 
         svg {
+			pointer-events: none;
             float: right;
         }
 	}
@@ -101,6 +102,10 @@
 				// background-color: $primary;
 			}
 
+			&:first-child {
+				border-top: none;
+			}
+
 			transform: translateX(-15px);
 			opacity: 0;
 			animation: list 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
@@ -132,15 +137,47 @@
 }
 
 td .selector {
-	top: 12%;
+	top: 22%;
     position: absolute;
 	font-size: 11px;
+	max-width: fit-content;
+
+	div {
+		padding: .7rem 1rem;
+	}
+
+	li {
+		padding: .7rem 1rem;
+	}
 }
 
 td .activeSelector {
 	z-index: 1000000;
+	filter: none;
 
 	ul {
 		max-width: 233px;
+		border-left: 1px solid $primary;
+        border-right: 1px solid $primary;
+	
 	}
+	.spacer {
+		border: 1px solid $primary;
+		border-top-color: rgba(255, 255, 255, 0.123);
+	}
+	div {
+		border: 1px solid $primary;
+		border-bottom-color: rgba(255, 255, 255, 0.123);
+
+	}
+}
+
+.editSelector {
+	outline: 1px solid rgba(255,255,255,0.301);
+    outline-offset: -1px;
+}
+
+.editingInput {
+	outline: 1px solid rgba(255,255,255,0.301);
+    outline-offset: 0px;
 }

@@ -2,28 +2,40 @@ import React, { useState, useEffect, useRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import useOnClickOutside from "../../../hooks/useOnClickOutside";
 
-const Status = ({ status, edit, values, setValues }) => {
+const Status = ({ status, edit, values, setValues, filter }) => {
 	const [options, setOptions] = useState([]);
 	const [currentStatus, setCurrentStatus] = useState({});
 
 	useEffect(() => {
-		if (status == "complete") {
+		if (status === "complete") {
 			setCurrentStatus({ name: status, class: "green" });
 		} else if (status === "in progress") {
 			setCurrentStatus({ name: status, class: "orange" });
 		} else if (status === "not started") {
 			setCurrentStatus({ name: status, class: "grey" });
+		} else if (status === "no filter") {
+			setCurrentStatus({ name: "no filter", class: "white" });
 		} else {
 			setCurrentStatus({ name: "error", class: "" });
 		}
-	}, []);
+	}, [status]);
 
 	useEffect(() => {
-		let list = [
-			{ name: "not started", class: "grey" },
-			{ name: "in progress", class: "orange" },
-			{ name: "complete", class: "green" },
-		];
+		let list;
+		if (!filter) {
+			list = [
+				{ name: "not started", class: "grey" },
+				{ name: "in progress", class: "orange" },
+				{ name: "complete", class: "green" },
+			];
+		} else {
+			list = [
+				{ name: "no filter", class: "white" },
+				{ name: "not started", class: "grey" },
+				{ name: "in progress", class: "orange" },
+				{ name: "complete", class: "green" },
+			];
+		}
 		list = list.filter((object) => {
 			return object.name !== currentStatus.name;
 		});

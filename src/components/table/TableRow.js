@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import useEscape from "../../hooks/useEscape";
-import DatePicker from "react-date-picker/dist/entry.nostyle";
 import List from "./tableRowComponents/List";
 import Status from "./tableRowComponents/Status";
 import Selector from "./New/Selector";
+import DateInput from "./tableRowComponents/Date";
 
 const TableRow = (props) => {
 	const [values, setValues] = useState({});
@@ -33,24 +33,38 @@ const TableRow = (props) => {
 		});
 	};
 
+	const handleSelector = (name, id, attribute) => {
+		setValues({
+			...values,
+			[attribute]: { name: name, id: id },
+		});
+	};
+
 	function validateEdit() {
 		let errors = {};
 		for (let i = 0; i < props.data.length; i++) {
-			if (props.data[i].type.toLowerCase() === "text") {
+			if (props.data[i].type.toLowerCase() === "text" || props.data[i].type.toLowerCase() === "description") {
 				if (!values[Object.keys(values)[i]]) {
 					errors[Object.keys(values)[i]] = true;
 				}
 			}
 		}
-		return {};
+		return errors;
+	}
+
+	function parseDates(inputDate) {
+		let date = new Date(inputDate),
+			month = ("0" + (date.getMonth() + 1)).slice(-2),
+			day = ("0" + date.getDate()).slice(-2);
+		return [month, day, date.getFullYear()].join("/");
 	}
 
 	function handleSubmit() {
-		// const validation = validateEdit();
-		// setErrors(validation);
-		// if (Object.keys(validation).length === 0) {
-		// }
-		props.editRow(props.index, values);
+		const validation = validateEdit();
+		setErrors(validation);
+		if (Object.keys(validation).length === 0) {
+			props.editRow(props.index, values);
+		}
 	}
 
 	function handleDelete() {
@@ -63,7 +77,6 @@ const TableRow = (props) => {
 	}, [props.editable]);
 
 	useEscape(() => {
-		console.log();
 		if (props.index === editable.current) {
 			props.cancelEdit();
 		}
@@ -76,7 +89,6 @@ const TableRow = (props) => {
 				if (
 					object.type.toLowerCase() === "text" ||
 					object.type.toLowerCase() === "description" ||
-					object.type.toLowerCase() === "date" ||
 					object.type.toLowerCase() === "select"
 				) {
 					if (object.value) {
@@ -90,6 +102,16 @@ const TableRow = (props) => {
 							);
 						}
 						return <td key={index}>{object.value}</td>;
+					}
+					return (
+						<td key={index} className='null'>
+							null
+						</td>
+					);
+				}
+				if (object.type.toLowerCase() === "date") {
+					if (object.value) {
+						return <td key={index}>{parseDates(object.value)}</td>;
 					}
 					return (
 						<td key={index} className='null'>
@@ -124,7 +146,7 @@ const TableRow = (props) => {
 				if (object.type.toLowerCase() === "id") {
 					return <td key={index}>{object.value}</td>;
 				}
-				return <td>error</td>;
+				return <td key={index}>error</td>;
 			})}
 			{props.index === props.isDeletePromptOpen ? (
 				<>
@@ -173,7 +195,7 @@ const TableRow = (props) => {
 			{props.data.map((value, index) => {
 				if (value.type.toLowerCase() === "text") {
 					return (
-						<td key={index}>
+						<td key={index} className='editingInput'>
 							<input
 								className={
 									errors[value.attribute] ? "editInput invalid" : "editInput "
@@ -186,27 +208,31 @@ const TableRow = (props) => {
 								onChange={(e) => {
 									handleChange(e);
 								}}
+								tabIndex={0}
 							/>
 						</td>
 					);
 				}
 				if (value.type.toLowerCase() === "date") {
 					let date = new Date(values[value.attribute]);
-					return (
-						<td key={index} className='editDate'>
-							<DatePicker
-								value={date}
-								onChange={(result) => handleDateChange(result, value.attribute)}
-								format='MM/dd/y'
-								minDate={new Date("2010-01-02")}
-							/>
-						</td>
-					);
+						return (
+							<td
+								key={index}
+								className={errors[value.attribute] ? "editDate invalid" : "editDate "}>
+								<DateInput inputDate={date} handleDateChange={handleDateChange} attribute={value.attribute} isNull={values[value.attribute]}/>
+							</td>
+						);
 				}
 				if (value.type.toLowerCase() === "select") {
 					return (
-						<td>
-							<Selector value={value.attribute}/>
+						<td key={index} className={errors[value.attribute] ? "editSelector invalid" : "editSelector"}>
+							<Selector
+								value={value.attribute}
+								handleSelector={(name, id) => {
+									handleSelector(name, id, value.attribute);
+								}}
+								default={values[value.attribute]}
+							/>
 						</td>
 					);
 				}
@@ -234,7 +260,7 @@ const TableRow = (props) => {
 				}
 				if (value.type.toLowerCase() === "status") {
 					return (
-						<td key={index}>
+						<td key={index} className={errors[value.attribute] ? "editSelector invalid" : "editSelector"} >
 							<Status
 								status={values[value.attribute]}
 								edit={true}
@@ -246,7 +272,7 @@ const TableRow = (props) => {
 				}
 				if (value.type.toLowerCase() === "list") {
 					return (
-						<td className='list' key={index}>
+						<td className='list editSelector' key={index}>
 							<List
 								default={value.attribute}
 								addresses={value.value}
@@ -255,20 +281,21 @@ const TableRow = (props) => {
 						</td>
 					);
 				}
-				return <td>error</td>;
+				return <td key={index}>error</td>;
 			})}
 			<td>
 				<button
 					onClick={() => {
 						setErrors({});
 						props.cancelEdit();
-					}}>
+					}}
+					>
 					cancel
 				</button>
 			</td>
 			<td>
 				<button className='confirm' onClick={handleSubmit}>
-					edit
+					save
 				</button>
 			</td>
 		</tr>

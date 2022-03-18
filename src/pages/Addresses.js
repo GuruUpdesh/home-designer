@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Table from "../components/table/Table";
+import { toast } from "react-toastify";
 
 const Addresses = () => {
+	// basic table information
 	const title = "Addresses";
 	const entity = "address";
 	const template = {
@@ -17,7 +19,7 @@ const Addresses = () => {
 		dataKeys: [
 			"addressID",
 			"address",
-			"cID",
+			"client",
 			"status",
 			"dateStarted",
 			"dateComplete",
@@ -28,16 +30,16 @@ const Addresses = () => {
 	};
 
 	const [tableData, setTableData] = useState([]);
+	const [loaded, setLoaded] = useState(false)
 
+	// get the rows on load
 	useEffect(() => {
 		getAddressRows();
 	}, []);
 
-	useEffect(() => {
-		console.log(tableData);
-	}, [tableData]);
-
+	// read
 	const getAddressRows = async () => {
+		setLoaded(false)
 		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
 			method: "GET",
 		}).then((response) => {
@@ -45,12 +47,16 @@ const Addresses = () => {
 				response.json().then((data) => {
 					setTableData(data);
 				});
+			} else {
+				toast.error("Error when trying to read data");
 			}
+			setLoaded(true)
 		});
 	};
 
+	// create
 	const addAddress = async (values) => {
-		console.log(values);
+		setLoaded(false)
 		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
 			method: "PUT",
 			body: JSON.stringify({
@@ -66,16 +72,51 @@ const Addresses = () => {
 			if (response.status === 200) {
 				response.json().then((data) => {
 					setTableData(data);
+					toast.success(`Successfully created ${values.name}`);
 				});
+			} else {
+				toast.error("Error when trying to create data");
 			}
 		});
+		setLoaded(true)
 	};
 
+	// edit
 	const editAddressRow = async (index, values) => {
-		console.log(values);
+		setLoaded(false)
+		const request = {
+			address: values.address,
+			id: values.id,
+			status: values.status,
+			dateStarted: values["date started"],
+			dateComplete: values["date complete"],
+			cID: values.client,
+		};
+
+		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
+			method: "POST",
+			body: JSON.stringify(request),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).then((response) => {
+			if (response.status === 200) {
+				response.json().then((data) => {
+					const copyTableData = [...tableData];
+					copyTableData[index] = data[index];
+					setTableData(copyTableData);
+					toast.success(`Successfully edited ${values.name}`);
+				});
+			} else {
+				toast.error("Error when trying to edit data");
+			}
+		});
+		setLoaded(true)
 	};
 
+	// delete
 	const deleteAddressRow = async (index, id) => {
+		setLoaded(false)
 		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
 			method: "DELETE",
 			body: JSON.stringify({ id: id }),
@@ -85,8 +126,37 @@ const Addresses = () => {
 		}).then((response) => {
 			if (response.status === 200) {
 				getAddressRows();
+				toast.success(`Successfully deleted`);
+			} else {
+				toast.error("Error when trying to delete data");
 			}
 		});
+		setLoaded(true)
+	};
+
+	// filter
+	const filterAddressRows = async (filterBy) => {
+		if (filterBy === "no filter") {
+			getAddressRows();
+			return;
+		}
+		setLoaded(false)
+		await fetch(`${process.env.REACT_APP_API_URL}/addresses/filter`, {
+			method: "POST",
+			body: JSON.stringify({ filterBy }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}).then((response) => {
+			if (response.status === 200) {
+				response.json().then((data) => {
+					setTableData(data);
+				});
+			} else {
+				toast.error("Error when trying to filter data");
+			}
+		});
+		setLoaded(true)
 	};
 	return (
 		<div className='clients'>
@@ -98,77 +168,12 @@ const Addresses = () => {
 				addRow={addAddress}
 				editRow={editAddressRow}
 				deleteRow={deleteAddressRow}
+				tableFilterStatus={true}
+				filterRows={filterAddressRows}
+				loaded={loaded}
 			/>
 		</div>
 	);
 };
 
 export default Addresses;
-
-// const addressesContent = {
-// 	title: "Addresses",
-// 	entity: "address",
-// 	template: {
-// 		attributes: ["address", "client", "complete", "date started", "date complete", "projects"],
-// 		dataKeys: ["address", "client", "complete", "dateStarted", "dateComplete", "projects"],
-// 		dataTypes: ["text", "text", "checkBox", "text", "text", "list"],
-// 	},
-// 	tableData: [
-// 		{
-// 			address: "4 B Blue Ridge Blvd, Brighton, MI",
-// 			client: "Josephine Darakjy",
-// 			complete: "checkbox",
-// 			dateStarted: "2/16/2022",
-// 			dateComplete: "incomplete",
-// 			projects: ["kitchen", "living room"]
-// 		},
-// 		{
-// 			address: "8 W Cerritos Ave #54, Bridgeport, NJ",
-// 			client: "Art Venere",
-// 			complete: "checkbox",
-// 			dateStarted: "1/16/2020",
-// 			dateComplete: "incomplete",
-// 			projects: ["bedroom", "bathroom"]
-// 		},
-// 		{
-// 			address: "7 W Jackson Blvd, San Jose, CA",
-// 			client: "Leota Dilliard",
-// 			complete: "checkbox",
-// 			dateStarted: "5/24/2021",
-// 			dateComplete: "incomplete",
-// 			projects: ["guest bedroom"]
-// 		},
-// 		{
-// 			address: "3 Mcauley Dr, Ashland, OH",
-// 			client: "Mitsue Tollner",
-// 			complete: "checkbox",
-// 			dateStarted: "8/11/2021",
-// 			dateComplete: "incomplete",
-// 			projects: ["entrance"]
-// 		},
-// 		{
-// 			address: "228 Runamuck Pl #2808, Baltimore, MD",
-// 			client: "Kris Marrier",
-// 			complete: "checkbox",
-// 			dateStarted: "2/17/2022",
-// 			dateComplete: "incomplete",
-// 			projects: []
-// 		},
-// 		{
-// 			address: "2371 Jerrold Ave, Kulpsville, PA",
-// 			client: "Minna Amigon",
-// 			complete: "checkbox",
-// 			dateStarted: "9/15/2019",
-// 			dateComplete: "incomplete",
-// 			projects: []
-// 		},
-// 		{
-// 			address: "37275 St  Rt 17m M, Middle Island, NY",
-// 			client: "Abel Maclead",
-// 			complete: "checkbox",
-// 			dateStarted: "1/2/2021",
-// 			dateComplete: "incomplete",
-// 			projects: []
-// 		},
-// 	],
-// };

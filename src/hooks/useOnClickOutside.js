@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+
+// react hook for when user clicks outside of ref
 function useOnClickOutside(ref, handler) {
 	useEffect(() => {
 		const listener = (event) => {

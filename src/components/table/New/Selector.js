@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import useOnClickOutside from "../../../hooks/useOnClickOutside";
 
 const Selector = (props) => {
 	const [isDropDownOpen, setIsDropDownOpen] = useState(false);
@@ -11,24 +12,27 @@ const Selector = (props) => {
 		setIsDropDownOpen(!isDropDownOpen);
 	}
 
-	useEffect(() => {
-		console.log(options);
-	}, [options]);
-
 	function handleSelect(name, id) {
         if (name === selected) {
             setSelected(props.value)
 			props.handleSelector(props.value, id)
         } else {
 			setSelected(name);
-			props.handleSelector(props.value, id)
+			props.handleSelector(name, id)
 			setIsDropDownOpen(false)
         }
 	}
 
 	useEffect(() => {
-		console.log(props);
 		getRelationship();
+
+		if (props.default) {
+			setSelected(props.default)
+		}
+
+		if (props.value === "address") {
+			setSelected("Null")
+		}
 	}, []);
 
 	const getRelationship = async () => {
@@ -49,9 +53,11 @@ const Selector = (props) => {
 		});
 	};
 
+	const ref = useRef();
+	useOnClickOutside(ref, () => setIsDropDownOpen(false));
 
 	return (
-		<div className={isDropDownOpen ? "selector activeSelector" : "selector"}>
+		<div ref={ref} className={isDropDownOpen ? "selector activeSelector" : "selector"} >
 			<div onClick={toggleDropDown} className='main'>
 				{selected}
                 {isDropDownOpen ? <BiChevronUp /> : <BiChevronDown/>}
@@ -60,6 +66,7 @@ const Selector = (props) => {
 			{isDropDownOpen && (
 				<>
 					<ul>
+						{props.value === "address" && <li className={selected === "Null" || !selected ? "selected" : ""} onClick={() => handleSelect("Null", -1)}>Null</li>}
 						{options.map((option, index) => {
 							return (
 								<li
@@ -71,14 +78,11 @@ const Selector = (props) => {
 								</li>
 							);
 						})}
-						{/* <li>{props.value}</li>
-                    <li>test 2</li> */}
 					</ul>
 					<div className='spacer'></div>
 				</>
 			)}
 		</div>
-		// <div>{props.value}</div>
 	);
 };
 

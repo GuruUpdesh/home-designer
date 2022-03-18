@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TableHeader from "./TableHeader";
 import NewPopUp from "./New/NewPopUp";
 import TableRow from "./TableRow";
 import { BiSort } from "react-icons/bi";
 
-const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow }) => {
-	// on load
-
+const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow, tableFilterStatus, filterRows, loaded }) => {
 	// search is initially set to all the data and then filtered depending on search value
 	// the table is always displaying the content of searchData never tableContent
 	const [tableSearchData, setTableSearchData] = useState(tableData);
@@ -15,6 +13,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 	// search by is the attribute that is being compared in search
 	const [searchBy, setSearchBy] = useState(template.dataKeys[1]);
 
+	const prevCount = useRef(0)
 	// function handles search filtering
 	function searchHandler(value) {
 		// stop all edits and deletes
@@ -25,8 +24,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 			cancelEdit();
 		}
 
-		setSortBy(-1); // removes any sorting
-
+		prevCount.current = tableSearchData.length
 		setSearchValue(value);
 
 		// filters the raw data based off the search attribute
@@ -36,42 +34,6 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 
 		// updates search results and stores result in unsorted since we removed sorting
 		setTableSearchData(result);
-		setUnsorted(result);
-	}
-
-	// sort by is the index of the attribute that is sorting the table
-	// if the value = -1 no attribute is sorting
-	const [sortBy, setSortBy] = useState(-1);
-
-	// unsorted stores an unsorted copy of the data from when no sorting is being applied
-	const [unsorted, setUnsorted] = useState(tableSearchData);
-
-	// this function takes the index of the attribute that we want to sort the table by
-	// it then updates the state of the search data to the sorted information
-	function handleSort(index) {
-		// stop all edits and deletes
-		if (isDeletePromptOpen !== false) {
-			cancelDeletePrompt();
-		}
-		if (editable !== false) {
-			cancelEdit();
-		}
-		// if the index is not the current sorted index and the attribute data type is text
-		if (index !== sortBy && template.dataTypes[index] === "text") {
-			setSortBy(index);
-			const copy = [...tableSearchData]; // make a copy of the data to sort on
-
-			// sort the copy based off the selected attribute
-			const sortProp = template.dataKeys[index];
-			copy.sort((a, b) => (a[sortProp] > b[sortProp] ? 1 : -1));
-			setTableSearchData(copy);
-
-			// if the index is the same as the current index set sort by to nothing and reset
-			// search data to the unsorted version
-		} else if (index === sortBy) {
-			setSortBy(-1);
-			setTableSearchData(unsorted);
-		}
 	}
 
 	// new popup functionality
@@ -118,6 +80,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 		<div className='tableContainer'>
 			<TableHeader
 				title={title}
+				previousLength={prevCount}
 				length={tableSearchData.length}
 				searchValue={searchValue}
 				searchHandler={searchHandler}
@@ -127,6 +90,9 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 				tableDataAttributes={template.dataKeys}
 				searchBy={searchBy}
 				setSearchBy={setSearchBy}
+				tableFilterStatus={tableFilterStatus}
+				filterRows={filterRows}
+				loaded={loaded}
 			/>
 			<div className='tableWrapper'>
 				<table>
@@ -136,10 +102,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow 
 								return (
 									<th
 										key={index}
-										className={sortBy === index ? "sort" : template.dataTypes[index] === "text" ? "sortable": ""} //prettier-ignore
-										onClick={() => {
-											handleSort(index);
-										}}>
+										>
 										{attribute}
 										<BiSort className='icon' />
 									</th>

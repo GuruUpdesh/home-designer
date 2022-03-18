@@ -1,31 +1,28 @@
 import React from "react";
-import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "./styles/styles.css";
 import Clients from "./pages/Clients";
 import Layout from "./components/Layout";
 import Addresses from "./pages/Addresses";
 import Projects from "./pages/Projects";
 import Employees from "./pages/Employees";
-import BillingHours from "./pages/BillingHours";
 import ProjectsEmployee from "./pages/ProjectsEmployee";
-
-const rootElement = document.getElementById("root");
+import Home from "./pages/Home";
 
 function App() {
 	return (
-		<HashRouter>
+		<BrowserRouter>
 			<Layout>
 				<Routes>
-					<Route path="/" element={<Navigate to="/clients"/>} />
+					<Route path="/" element={<Home/>} />
 					<Route exact path="/clients" element={<Clients />} />
 					<Route path="/addresses" element={<Addresses />} />
 					<Route path="/projects" element={<Projects />} />
 					<Route path="/projects-employees" element={<ProjectsEmployee />} />
 					<Route path="/employees" element={<Employees />} />
-					<Route path="/billing-hours" element={<BillingHours />} />
 				</Routes>
 			</Layout>
-		</HashRouter>
+		</BrowserRouter>
 	);
 }
 export default App;
