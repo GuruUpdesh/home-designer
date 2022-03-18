@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/GuruUpdesh/Home-Designer/static/css/main.5ae59a1d.css",
-    "main.js": "/GuruUpdesh/Home-Designer/static/js/main.c53e852d.js",
-    "index.html": "/GuruUpdesh/Home-Designer/index.html",
-    "main.5ae59a1d.css.map": "/GuruUpdesh/Home-Designer/static/css/main.5ae59a1d.css.map",
-    "main.c53e852d.js.map": "/GuruUpdesh/Home-Designer/static/js/main.c53e852d.js.map"
+    "main.css": "/Home-Designer/static/css/main.5ae59a1d.css",
+    "main.js": "/Home-Designer/static/js/main.c53e852d.js",
+    "index.html": "/Home-Designer/index.html",
+    "main.5ae59a1d.css.map": "/Home-Designer/static/css/main.5ae59a1d.css.map",
+    "main.c53e852d.js.map": "/Home-Designer/static/js/main.c53e852d.js.map"
   },
   "entrypoints": [
     "static/css/main.5ae59a1d.css",
