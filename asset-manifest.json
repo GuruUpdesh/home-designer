@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/GuruUpdesh/Home-Designer/static/css/main.5ae59a1d.css",
+    "main.js": "/GuruUpdesh/Home-Designer/static/js/main.11d29d87.js",
+    "index.html": "/GuruUpdesh/Home-Designer/index.html",
+    "main.5ae59a1d.css.map": "/GuruUpdesh/Home-Designer/static/css/main.5ae59a1d.css.map",
+    "main.11d29d87.js.map": "/GuruUpdesh/Home-Designer/static/js/main.11d29d87.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5ae59a1d.css",
+    "static/js/main.11d29d87.js"
+  ]
+}
