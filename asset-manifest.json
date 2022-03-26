@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Home-Designer/static/css/main.ef0f8a54.css",
-    "main.js": "/Home-Designer/static/js/main.4ed1910b.js",
+    "main.css": "/Home-Designer/static/css/main.44288bba.css",
+    "main.js": "/Home-Designer/static/js/main.409b434a.js",
     "index.html": "/Home-Designer/index.html",
-    "main.ef0f8a54.css.map": "/Home-Designer/static/css/main.ef0f8a54.css.map",
-    "main.4ed1910b.js.map": "/Home-Designer/static/js/main.4ed1910b.js.map"
+    "main.44288bba.css.map": "/Home-Designer/static/css/main.44288bba.css.map",
+    "main.409b434a.js.map": "/Home-Designer/static/js/main.409b434a.js.map"
   },
   "entrypoints": [
-    "static/css/main.ef0f8a54.css",
-    "static/js/main.4ed1910b.js"
+    "static/css/main.44288bba.css",
+    "static/js/main.409b434a.js"
   ]
 }
