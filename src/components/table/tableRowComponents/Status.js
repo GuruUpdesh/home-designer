@@ -50,62 +50,64 @@ const Status = ({ status, edit, values, setValues, filter }) => {
 	const ref = useRef();
 	useOnClickOutside(ref, () => setIsDropDownActive(false));
 	return (
-		<ul
-			className={
-				edit
-					? isDropDownActive
-						? "status editableStatus activeStatus"
-						: "status editableStatus"
-					: "status"
-			}
-			ref={ref}>
-			{edit ? (
-				<>
-					<li onClick={toggleDropDown} className={currentStatus.class}>
-						{currentStatus.name}
-						{isDropDownActive ? <BiChevronUp /> : <BiChevronDown />}
-					</li>
-					{isDropDownActive && (
-						<>
-							{options.map((object, index) => {
-								return (
-									<li
-										className={object.class + " option"}
-										key={index}
-										onClick={() => {
-											setCurrentStatus({
-												name: object.name,
-												class: object.class,
-											});
+		<div className="statusWrapper">
+			<ul
+				className={
+					edit
+						? isDropDownActive
+							? "status editableStatus activeStatus"
+							: "status editableStatus"
+						: "status"
+				}
+				ref={ref}>
+				{edit ? (
+					<>
+						<li onClick={toggleDropDown} className={currentStatus.class}>
+							{currentStatus.name}
+							{isDropDownActive ? <BiChevronUp /> : <BiChevronDown />}
+						</li>
+						{isDropDownActive && (
+							<div className="statusOptionsWrapper">
+								{options.map((object, index) => {
+									return (
+										<li
+											className={object.class + " option"}
+											key={index}
+											onClick={() => {
+												setCurrentStatus({
+													name: object.name,
+													class: object.class,
+												});
 
-											setValues({
-												...values,
-												status: object.name
-											})
-											setIsDropDownActive(false);
-										}}>
-										{object.name}
-									</li>
-								);
-							})}
-						</>
-					)}
-				</>
-			) : (
-				<li
-					className={
-						status === "not started"
-							? "grey"
-							: status === "in progress"
-							? "orange"
-							: status === "complete"
-							? "green"
-							: "error"
-					}>
-					{status}
-				</li>
-			)}
-		</ul>
+												setValues({
+													...values,
+													status: object.name,
+												});
+												setIsDropDownActive(false);
+											}}>
+											{object.name}
+										</li>
+									);
+								})}
+							</div>
+						)}
+					</>
+				) : (
+					<li
+						className={
+							status === "not started"
+								? "grey"
+								: status === "in progress"
+								? "orange"
+								: status === "complete"
+								? "green"
+								: "error"
+						}>
+						{status}
+					</li>
+				)}
+			</ul>
+		</div>
 	);
 };
 

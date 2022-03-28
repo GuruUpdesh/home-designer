@@ -2,9 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import TableHeader from "./TableHeader";
 import NewPopUp from "./New/NewPopUp";
 import TableRow from "./TableRow";
-import { BiSort } from "react-icons/bi";
+import ContextMenu from "../ContextMenu";
 
-const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow, tableFilterStatus, filterRows, loaded }) => {
+const Table = ({
+	title,
+	entity,
+	template,
+	tableData,
+	addRow,
+	editRow,
+	deleteRow,
+	tableFilterStatus,
+	filterRows,
+	loaded,
+	contextFunctions,
+}) => {
 	// search is initially set to all the data and then filtered depending on search value
 	// the table is always displaying the content of searchData never tableContent
 	const [tableSearchData, setTableSearchData] = useState(tableData);
@@ -13,7 +25,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow,
 	// search by is the attribute that is being compared in search
 	const [searchBy, setSearchBy] = useState(template.dataKeys[1]);
 
-	const prevCount = useRef(0)
+	const prevCount = useRef(0);
 	// function handles search filtering
 	function searchHandler(value) {
 		// stop all edits and deletes
@@ -24,7 +36,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow,
 			cancelEdit();
 		}
 
-		prevCount.current = tableSearchData.length
+		prevCount.current = tableSearchData.length;
 		setSearchValue(value);
 
 		// filters the raw data based off the search attribute
@@ -77,7 +89,15 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow,
 	}, [tableData]);
 
 	return (
-		<div className='tableContainer'>
+		<div
+			className='tableContainer'
+			key={title}
+			onContextMenu={() => {
+				// console.log(contextFunctions.current);
+				const copy = {...contextFunctions.current}
+				copy.create = openNew
+				contextFunctions.current = copy
+			}}>
 			<TableHeader
 				title={title}
 				previousLength={prevCount}
@@ -99,17 +119,8 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow,
 					<thead>
 						<tr>
 							{template.attributes.map((attribute, index) => {
-								return (
-									<th
-										key={index}
-										>
-										{attribute}
-										<BiSort className='icon' />
-									</th>
-								);
+								return <th key={index}>{attribute}</th>;
 							})}
-							<th />
-							<th />
 						</tr>
 					</thead>
 					<tbody>
@@ -141,6 +152,7 @@ const Table = ({ title, entity, template, tableData, addRow, editRow, deleteRow,
 									key={index}
 									editRow={editRow}
 									deleteRow={deleteRow}
+									contextFunctions={contextFunctions}
 								/>
 							);
 						})}

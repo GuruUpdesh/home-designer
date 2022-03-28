@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Table from "../components/table/Table";
 import { toast } from "react-toastify";
 
-const Addresses = () => {
+const Addresses = ({contextFunctions}) => {
 	// basic table information
 	const title = "Addresses";
 	const entity = "address";
@@ -171,6 +171,7 @@ const Addresses = () => {
 				tableFilterStatus={true}
 				filterRows={filterAddressRows}
 				loaded={loaded}
+				contextFunctions={contextFunctions}
 			/>
 		</div>
 	);

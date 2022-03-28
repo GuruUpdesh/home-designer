@@ -2,7 +2,7 @@ import React from "react";
 import SliderCard from "./SliderCard";
 
 
-const Slider = () => {
+const Slider = ({contextFunctions}) => {
 	const tables = [
 		{ title: "clients", attributes: ["id", "name", "email", "phone"] },
 		{
@@ -12,6 +12,10 @@ const Slider = () => {
         {
 			title: "projects",
 			attributes: ["id", "name", "status", "date started", "date complete", "description"],
+		},
+		{
+			title: "projects & employees",
+			attributes: ["id", "project", "employee"],
 		},
         {
 			title: "employees",
@@ -24,7 +28,7 @@ const Slider = () => {
 			<div className='controller'>
 			</div>
 			{tables.map((table, index) => {
-				return <SliderCard title={table.title} attributes={table.attributes} key={index} />;
+				return <SliderCard title={table.title} attributes={table.attributes}  contextFunctions={contextFunctions} key={index} />;
 			})}
 		</div>
 	);

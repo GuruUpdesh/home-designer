@@ -1,0 +1,67 @@
+@import "../base/properties";
+
+nav.navLocked {
+    left: 0;
+}
+
+.navbar {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: -60px;
+    height: 100vh;
+    backdrop-filter: blur(10px) brightness(60%);
+    @supports not (backdrop-filter: blur(10px)) {
+        background-color: rgba(0, 0, 0, 0.6) !important;
+    }
+
+    transition: left .3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    &:hover {
+        transition-delay: var(--transition-hover-delay);
+        left: 0;
+    }
+
+    ul {
+        height: 80%;
+        max-height: 800px;
+        li {
+            flex: .5;
+        }
+    }
+
+    .active-btn {
+        background: linear-gradient(45deg, var(--clr-bg-700) 0%, var(--clr-primary-400) 100%);
+        transform: scale(1.1);
+        box-shadow: -3px 5px 5px var(--clr-primary-shadow-400), 2px -3px 10px var(--clr-primary-glow-200);
+        @media screen and (max-width:750px) {
+            outline: none;
+            border: none;
+        }
+        svg {
+            filter: drop-shadow(-2px 2px 1px rgba(0, 0, 0, 0.301))
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        left: -45px;
+		padding: 5px;
+    }
+}
+
+.nav-controller {
+    position: relative;
+    padding: .25rem 1rem;
+    background-color: transparent;
+    border: 1px solid var(--clr-border-400);
+    box-shadow: 10px 1px 15px rgba(0, 0, 0, 0.61);
+
+    @media screen and (max-width: 1000px) {
+        box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.61);
+    }
+
+    svg {
+        transform: translateY(2px);
+    }
+}
+
+ 

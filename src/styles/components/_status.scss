@@ -1,0 +1,128 @@
+.statusWrapper {
+    // height: calc(100% - .8rem);
+    width: calc(100% - 2rem);
+
+    position: absolute;
+    // background-color: red;
+    top: .8rem;
+    display: flex;
+    align-items: center;
+}
+.status {
+    // position: absolute;
+    margin: 0;
+	top: 0rem;
+	max-width: fit-content;
+	font-size: 10.5px;
+	list-style: none;
+	background-color: var(--clr-grey-500);
+	border-radius: 10px;
+	overflow: hidden;
+    outline: 1px solid var(--clr-border-700);
+
+	li {
+        white-space: nowrap;
+		padding: 0.7rem;
+		@media screen and (max-width: 1500px) {
+			padding: .4rem;
+		}
+		user-select: none;
+		position: relative;
+		overflow: hidden;
+        transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+		&:after {
+			content: "";
+			width: 1000%;
+			left: 0;
+			height: 1px;
+			position: absolute;
+			background-color: rgba(255, 255, 255, 0.123);
+			z-index: 10000;
+			top: 0;
+		}
+
+		&:first-child {
+			&:after {
+				width: 0;
+			}
+		}
+	}
+
+	svg {
+        color: white !important;
+		float: right;
+        margin-left: 2ch;
+	}
+
+    .green {
+        color: rgb(36, 187, 36);
+    }
+
+    .orange {
+        color: rgb(248, 139, 37);
+    }
+
+    .grey {
+        color: rgb(56, 120, 216);
+    }
+}
+
+.editableStatus {
+    z-index: 1000000;
+    li {
+        cursor: pointer;
+	}
+}
+
+.activeStatus {
+    outline: 1px solid var(--clr-border-400);
+    filter: drop-shadow(0 0 5px var(--clr-grey-900));
+    outline-offset: 1px;
+    box-shadow: 3px 3px 20px var(--clr-grey);
+    z-index: 5;
+
+    .green:hover {
+        color: white;
+        background-color: rgb(36, 187, 36);
+    }
+
+    .orange:hover {
+        color: white;
+        background-color: rgb(248, 139, 37);
+    }
+
+    .grey:hover {
+        color: white;
+        background-color: rgb(44, 44, 73);
+    }
+
+}
+
+@keyframes searchList {
+    0% {
+        transform: scaleY(0);
+	}
+	100% {
+        transform: scaleY(1);
+	}
+}
+
+.statusOptionsWrapper {
+    border-top: 1px solid var(--clr-border-700);
+    transform-origin: top;
+    animation: searchList 0.2s var(--at-c-main) forwards;
+
+    li {
+        opacity: 0; 
+        animation: fadeRightLarge 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+        // animation-delay: 200ms;
+        $n: 3;
+        @for $x from 0 through $n {
+            &:nth-child(#{$x}) {
+                animation-delay: 200ms * ($x - 1) - ($x * 10);
+            }
+        }
+    }
+}
+

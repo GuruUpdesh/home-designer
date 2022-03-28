@@ -1,0 +1,95 @@
+.listContainer {
+	width: fit-content;
+	position: relative;
+    user-select: none;
+	div {
+		white-space: nowrap;
+		padding: 0.7rem;
+		position: relative;
+		background-color: var(--clr-grey-500);
+		transition: border-radius .15s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+
+        cursor: pointer;
+        border-radius: 20px;
+        border: 1px solid var(--clr-border-700);
+
+		&::selection {
+			background-color: var(--clr-primary-400);
+		}
+
+        svg {
+            opacity: .7;
+            margin-left: 2ch;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+	}
+
+    .spacer {
+        background-color: var(--clr-grey-600);
+    }
+
+	ul {
+		list-style: none;
+		overflow: hidden;
+		position: absolute;
+		width: 100%;
+        background-color: var(--clr-grey-500);
+	}
+    
+	li {
+        white-space: nowrap;
+		padding: 0.7rem;
+		position: relative;
+		border-top: 1px solid var(--clr-border-700);
+        background-color: var(--clr-grey-500);
+
+        opacity: 0;
+			animation: fadeRightLarge 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+			$n: 50;
+			@for $x from 2 through $n {
+				&:nth-child(#{$x}) {
+					animation-delay: 100ms * ($x - 1) - ($x * 10);
+				}
+			}
+	}
+}
+
+.active {
+    margin-bottom: 1px;
+    div {
+        border: 1px solid var(--clr-border-400);
+        border-bottom: none;
+        border-radius: 20px 20px 0 0;
+        z-index: 2;
+    }
+    
+	ul {
+        border: 1px solid var(--clr-border-400);
+        border-top: none;
+        border-radius: 0 0 20px 20px;
+        z-index: 1;
+        box-shadow:0 0 20px var(--clr-grey-900);
+
+        transform-origin: top;
+		animation: searchList 0.2s var(--at-c-main) forwards;
+	}
+}
+
+tr .noInteract {
+    div {
+        cursor: default !important;
+    }
+}
+
+@keyframes searchList {
+	0% {
+		transform: scaleY(0);
+	}
+	100% {
+		transform: scaleY(1);
+	}
+}

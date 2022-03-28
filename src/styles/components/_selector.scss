@@ -1,0 +1,141 @@
+.selector {
+	user-select: none;
+	font-size: var(--fs-small);
+	position: relative;
+	// max-width: max-content;
+	min-width: max-content;
+	max-width: 180px;
+	z-index: 2;
+
+	.main {
+		border: 1px solid var(--clr-border-700);
+		background-color: var(--clr-grey-500);
+		padding: 1rem 2rem;
+		cursor: pointer;
+		border-radius: 30px;
+		// min-width: max-content;
+		max-width: inherit;
+
+		transition: border-radius 0.15s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+		svg {
+			position: absolute;
+			opacity: 0.7;
+			pointer-events: none;
+			float: right;
+			pointer-events: all;
+			margin-left: 2ch;
+			right: 2rem;
+
+			&:hover {
+				opacity: 1;
+			}
+		}
+	}
+
+	.selectorContent {
+		position: absolute;
+		width: 100%;
+		.spacer {
+			background-color: var(--clr-grey-500);
+			border-radius: 0 0 30px 30px;
+			// width: 17.1em;
+			max-width: 100%;
+			padding: 1rem 2rem;
+		}
+
+		transform-origin: top;
+		animation: searchList 0.2s var(--at-c-main) forwards;
+	}
+
+	ul {
+		list-style: none;
+		background-color: var(--clr-grey);
+		max-height: 15vh;
+		overflow-y: scroll;
+		margin: 0;
+		border-left: 1px solid var(--clr-border-700);
+		border-right: 1px solid var(--clr-border-700);
+		background-color: var(--clr-grey-700);
+		max-width: 220px;
+
+
+		.selected {
+			background-color: var(--clr-primary-700);
+			color: white;
+			text-decoration: underline;
+
+			&:hover {
+				background-color: var(--clr-primary-500);
+				color: white;
+			}
+		}
+
+		li {
+			padding: 1rem 2rem;
+			border-top: 1px solid var(--clr-border-400);
+			color: white;
+			white-space: nowrap;
+
+			&:hover {
+				color: var(--clr-primary-400);
+				cursor: pointer;
+			}
+
+			&:first-child {
+				border-top: none;
+			}
+
+			opacity: 0;
+			animation: fadeRightLarge 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+			$n: 50;
+			@for $x from 2 through $n {
+				&:nth-child(#{$x}) {
+					animation-delay: 100ms * ($x - 1) - ($x * 10);
+				}
+			}
+		}
+	}
+}
+
+.activeSelector {
+	.main {
+		border-radius: 30px 30px 0px 0;
+		border-bottom: none;
+	}
+
+	z-index: 3;
+}
+
+@keyframes searchList {
+	0% {
+		transform: scaleY(0);
+	}
+	100% {
+		transform: scaleY(1);
+	}
+}
+
+td .selector {
+	.main,
+	.spacer {
+		padding: 0.7rem 1rem;
+		@media screen and (max-width: 1000px) {
+			width: fit-content;
+			padding: 0.4rem 0.5rem;
+		}
+	}
+
+	li {
+		padding: 0.5rem 1rem;
+	}
+}
+
+.newContainer {
+	.main {
+		width: 17.1em;
+	}
+	.selector {
+		margin-bottom: 1rem;
+	}
+}

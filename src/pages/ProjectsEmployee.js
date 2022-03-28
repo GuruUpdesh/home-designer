@@ -3,7 +3,7 @@ import Table from "../components/table/Table";
 import { toast } from "react-toastify";
 
 // basic table information
-const ProjectsEmployee = () => {
+const ProjectsEmployee = ({contextFunctions}) => {
 	const title = "Projects & Employees";
 	const entity = "project employee relationship";
 	const template = {
@@ -120,6 +120,7 @@ const ProjectsEmployee = () => {
 				editRow={editProjectsEmployeesRow}
 				deleteRow={deleteProjectsEmployeesRow}
 				loaded={loaded}
+				contextFunctions={contextFunctions}
 			/>
 		</div>
 	);

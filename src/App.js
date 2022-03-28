@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { HashRouter, Routes, Route, BrowserRouter } from "react-router-dom";
 import "./styles/styles.css";
 import Clients from "./pages/Clients";
 import Layout from "./components/Layout";
@@ -8,21 +8,69 @@ import Projects from "./pages/Projects";
 import Employees from "./pages/Employees";
 import ProjectsEmployee from "./pages/ProjectsEmployee";
 import Home from "./pages/Home";
+import ContextMenu from "./components/ContextMenu";
+import NotFound from "./pages/NotFound";
 
 function App() {
+	const contextFunctions = useRef({
+		create: null,
+		edit: [null, null],
+		delete: [null, null],
+		link: null
+	});
+
 	return (
-		<BrowserRouter>
-			<Layout>
+		<HashRouter>
+			<ContextMenu contextFunctions={contextFunctions}/>
+			<Layout contextFunctions={contextFunctions}>
 				<Routes>
-					<Route path="/" element={<Home/>} />
-					<Route exact path="/clients" element={<Clients />} />
-					<Route path="/addresses" element={<Addresses />} />
-					<Route path="/projects" element={<Projects />} />
-					<Route path="/projects-employees" element={<ProjectsEmployee />} />
-					<Route path="/employees" element={<Employees />} />
+					<Route path='*' element={<NotFound/>} />
+
+					<Route path='/' element={<Home  contextFunctions={contextFunctions}/>} />
+					<Route
+						exact
+						path='/clients'
+						element={
+							<Clients
+								contextFunctions={contextFunctions}
+							/>
+						}
+					/>
+					<Route
+						path='/addresses'
+						element={
+							<Addresses
+								contextFunctions={contextFunctions}
+							/>
+						}
+					/>
+					<Route
+						path='/projects'
+						element={
+							<Projects
+								contextFunctions={contextFunctions}
+							/>
+						}
+					/>
+					<Route
+						path='/projects-employees'
+						element={
+							<ProjectsEmployee
+								contextFunctions={contextFunctions}
+							/>
+						}
+					/>
+					<Route
+						path='/employees'
+						element={
+							<Employees
+								contextFunctions={contextFunctions}
+							/>
+						}
+					/>
 				</Routes>
 			</Layout>
-		</BrowserRouter>
+		</HashRouter>
 	);
 }
 export default App;

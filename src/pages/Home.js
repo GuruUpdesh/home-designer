@@ -1,10 +1,10 @@
 import React from 'react'
 import Slider from '../components/slider/Slider'
 
-const Home = () => {
+const Home = ({contextFunctions}) => {
   return (
     <div className='clients'>
-        <Slider />
+        <Slider  contextFunctions={contextFunctions}/>
     </div>
   )
 }

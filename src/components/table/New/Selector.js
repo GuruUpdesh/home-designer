@@ -26,11 +26,12 @@ const Selector = (props) => {
 	useEffect(() => {
 		getRelationship();
 
+		console.log(props.default)
 		if (props.default) {
 			setSelected(props.default)
 		}
 
-		if (props.value === "address") {
+		if (props.value === "address" && props.default === undefined) {
 			setSelected("Null")
 		}
 	}, []);
@@ -64,7 +65,7 @@ const Selector = (props) => {
 				
 			</div>
 			{isDropDownOpen && (
-				<>
+				<div className="selectorContent">
 					<ul>
 						{props.value === "address" && <li className={selected === "Null" || !selected ? "selected" : ""} onClick={() => handleSelect("Null", -1)}>Null</li>}
 						{options.map((option, index) => {
@@ -74,13 +75,12 @@ const Selector = (props) => {
 									onClick={() => handleSelect(option.name, option.id)}
 									key={index}>
 									{option.name}
-									<span>{option.id}</span>
 								</li>
 							);
 						})}
 					</ul>
 					<div className='spacer'></div>
-				</>
+				</div>
 			)}
 		</div>
 	);

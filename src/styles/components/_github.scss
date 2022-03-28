@@ -1,0 +1,42 @@
+.github {
+	color: white;
+	position: fixed;
+	outline: 1px solid var(--clr-border-400);
+	bottom: 0;
+	right: 5vw;
+	background-color: var(--clr-border-700);
+	padding: .3rem 1rem;
+	padding-bottom: 0;
+	border-radius: 20px 20px 0px 0px;
+	backdrop-filter: blur(5px);
+	cursor: pointer;
+	z-index: 200;
+
+	svg {
+		margin-right: 1.5ch;
+	}
+
+	p {
+		position: relative;
+		display: inline-block;
+		&:after {
+			content: '';
+			position: absolute;
+			bottom: 3px;
+			left: 0;
+			background-color: rgba(white, .3);
+			width: 100%;
+			height: 2px;
+			border-radius: 2px;
+			transform-origin: left;
+			transform: scaleX(0);
+			transition: transform .2s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+		}	
+	}
+
+	&:hover {
+		p:after {
+			transform: scaleX(1);
+		}
+	}
+}

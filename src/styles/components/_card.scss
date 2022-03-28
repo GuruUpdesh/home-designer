@@ -1,0 +1,219 @@
+.cardContainer {
+	position: relative;
+	min-width: 17em;
+	min-height: 8.5em;
+	border-radius: 2em;
+	margin: 1rem;
+	border: 1px solid var(--clr-border-700);
+	font-size: var(--fs-header);
+	color: var(--clr-white);
+	background-image: linear-gradient(
+		45deg,
+		var(--clr-grey-900) 0%,
+		var(--clr-grey-700) 65%,
+		var(--clr-grey-900) 100%
+	);
+	background-size: 200%;
+	background-position: bottom left;
+	box-shadow: -3px 5px 10px #0000007c, 2px -3px 15px var(--clr-border-700);
+
+	transition: transform 0.3s cubic-bezier(0.46, 0.79, 0.67, 1.1),
+		box-shadow 0.3s cubic-bezier(0.46, 0.79, 0.67, 1.1), border 0.2s linear,
+		background-position 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    z-index: 1;
+
+	&:hover {
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		box-shadow: -3px 5px 20px #0000005b, 2px -3px 20px rgba(255, 255, 255, 0.062);
+		transform: scale(1.02) translateY(-5px) !important;
+		background-position: top right;
+
+		li {
+			animation: fadeRightCardLabels 3s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+		}
+
+		svg {
+			animation: sliderIcon 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+			animation-delay: 200ms;
+		}
+
+		.cardHeader {
+			color: rgba(255, 255, 255, 0.75);
+		}
+
+		button {
+			width: 100px;
+            &:after {
+                top: -2px;
+                bottom: -2px;
+                left: -2px;
+                right: -2px;
+            }
+			svg {
+				display: inline;
+				opacity: 0;
+				animation: arrowPulseRight 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) infinite
+					forwards;
+				animation-delay: 200ms;
+			}
+		}
+		h2 {
+			&:after {
+				animation: lineSlide 1.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+			}
+		}
+	}
+
+	ul {
+		max-width: 75%;
+
+		li {
+			opacity: 0;
+			animation-delay: 30ms;
+			$n: 10;
+			@for $x from 0 through $n {
+				&:nth-child(#{$x}) {
+					animation-delay: 50ms * ($x - 1) - ($x * 10);
+				}
+			}
+		}
+	}
+
+	.cardHeader {
+		cursor: pointer;
+		display: flex;
+		color: rgba(255, 255, 255, 0.5);
+
+        opacity: 0;
+		animation: fadeRightCardHeader 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+		animation-delay: 0.3s;
+
+		svg {
+			transform: translate(70%, 60%);
+			margin-right: var(--padding);
+		}
+
+		&:hover {
+			color: white;
+		}
+	}
+
+	button {
+		font-size: var(--fs-medium);
+		padding: 0.5rem 1rem;
+		@media screen and (max-width: 1000px) {
+			padding: 0.5rem 1rem;
+			padding-top: 0.4rem;
+		}
+        color: rgba(255, 255, 255, 0.75);
+		position: absolute;
+		right: 2em;
+		bottom: 1.2em;
+		border-radius: 1rem;
+		border: 1px solid var(--clr-border-700);
+		width: 6em;
+		box-shadow: -3px 5px 10px #0000005b, 2px -3px 15px rgba(255, 255, 255, 0.062);
+		transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+		background-color: var(--clr-grey-700);
+        font-weight: var(--fw-700);
+
+        &:after {
+		    transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+            content: "";
+            position: absolute;
+            top: -1px;
+            bottom: -1px;
+            left: -1px;
+            right: -1px;
+            background: linear-gradient(
+                45deg,
+                var(--clr-bg-700) 0%,
+                var(--clr-primary-400) 100%
+            );
+            z-index: -1;
+            border-radius: 1rem;
+            background-position: bottom left;
+
+            background-size: 200%;
+        }
+
+		svg {
+			float: right;
+			display: none;
+		}
+
+		&:hover {
+            color: var(--clr-white);
+			box-shadow: -3px 5px 5px #0000005b, 2px -3px 15px var(--clr-primary-glow-200);
+
+            &:after {
+                background-position: top right;
+            }
+
+			svg {
+				opacity: 1;
+				animation: none;
+			}
+		}
+	}
+}
+
+.cardWrapper {
+	display: inline-block;
+	opacity: 0;
+	animation: sliderContainer 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+	animation-delay: 30ms;
+	$n: 10;
+	@for $x from 0 through $n {
+		&:nth-child(#{$x}) {
+			animation-delay: 120ms * ($x - 1);
+
+			.sliderHeader {
+				animation-delay: 200ms + 120ms * ($x - 1) !important;
+			}
+		}
+	}
+
+	@media screen and (max-width: 500px) {
+		width: 100%;
+	}
+}
+
+@keyframes sliderContainer {
+	0% {
+		opacity: 0;
+		transform: translateY(2rem);
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0rem);
+	}
+}
+
+@keyframes fadeRightCardLabels {
+	0% {
+		user-select: none;
+		opacity: 0;
+		transform: translateX(-1rem);
+	}
+	100% {
+		user-select: all;
+		opacity: 0.25;
+		transform: translateY(0rem);
+	}
+}
+
+@keyframes fadeRightCardHeader {
+	0% {
+		opacity: 0;
+		transform: translateX(-1rem);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0rem);
+	}
+}

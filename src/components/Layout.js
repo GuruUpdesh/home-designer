@@ -3,7 +3,7 @@ import Nav from "./Nav";
 import { useLocation, useNavigate } from "react-router-dom";
 import { InView } from "react-intersection-observer";
 import { animateScroll as scroll } from "react-scroll";
-import {AiFillGithub} from 'react-icons/ai'
+import { AiFillGithub } from "react-icons/ai";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,13 +26,16 @@ const Layout = (props) => {
 
 	return (
 		<div className='app'>
-			<div className="github" onClick={() => window.open(
-              "https://github.com/GuruUpdesh")}><AiFillGithub/><p>Guru Updesh Singh</p></div>
+			<div className='github' onClick={() => window.open("https://github.com/GuruUpdesh")}>
+				<AiFillGithub />
+				<p>Guru Updesh Singh</p>
+			</div>
 			<Nav
 				navLocked={navLocked}
 				toggleNavLocked={toggleNavLocked}
 				activeButton={activeButton}
 				setActiveButton={setActiveButton}
+				contextFunctions={props.contextFunctions}
 			/>
 			<main className={navLocked ? "navLockedMain" : "mainFull"}>{props.children}</main>
 			<div className='footerContainer'>
@@ -41,16 +44,19 @@ const Layout = (props) => {
 						<div
 							ref={ref}
 							className={navLocked ? "navLockedMain footer" : "mainFull footer"}>
-							<h1 className={inView ? "" : "displayNone"}> </h1>
+							<p className={inView ? "" : "displayNone"}>© homedesigner 2022</p>
 							<div className='gradient' />
 							<img
-								src='/homedesigner.png'
+								src={process.env.PUBLIC_URL + "/homedesigner.png"}
 								className={inView ? "" : "displayNone"}
 								alt={""}></img>
 							<div>
 								<ul className={inView ? "" : "displayNone"}>
-								<li
-										className={activeButton === "" ? "activeLink" : ""}
+									<li
+										className={
+											(inView ? "" : "displayNone") +
+											(activeButton === "" ? "activeLink" : "")
+										}
 										onClick={() => {
 											setActiveButton("");
 											scroll.scrollToTop({
@@ -62,7 +68,10 @@ const Layout = (props) => {
 										Home
 									</li>
 									<li
-										className={activeButton === "clients" ? "activeLink" : ""}
+										className={
+											(inView ? "" : "displayNone") +
+											(activeButton === "clients" ? "activeLink" : "")
+										}
 										onClick={() => {
 											setActiveButton("clients");
 											scroll.scrollToTop({
@@ -74,7 +83,10 @@ const Layout = (props) => {
 										Clients
 									</li>
 									<li
-										className={activeButton === "addresses" ? "activeLink" : ""}
+										className={
+											(inView ? "" : "displayNone") +
+											(activeButton === "addresses" ? "activeLink" : "")
+										}
 										onClick={() => {
 											setActiveButton("addresses");
 											scroll.scrollToTop({
@@ -86,7 +98,10 @@ const Layout = (props) => {
 										Addresses
 									</li>
 									<li
-										className={activeButton === "projects" ? "activeLink" : ""}
+										className={
+											(inView ? "" : "displayNone") +
+											(activeButton === "projects" ? "activeLink" : "")
+										}
 										onClick={() => {
 											setActiveButton("projects");
 											scroll.scrollToTop({
@@ -99,9 +114,10 @@ const Layout = (props) => {
 									</li>
 									<li
 										className={
-											activeButton === "projects-employees"
-												? "activeLink relationship"
-												: "relationship"
+											(inView ? "" : "displayNone") +
+											(activeButton === "projects-employees"
+												? "activeLink"
+												: "")
 										}
 										onClick={() => {
 											setActiveButton("projects-employees");
@@ -114,7 +130,10 @@ const Layout = (props) => {
 										P & E
 									</li>
 									<li
-										className={activeButton === "employees" ? "activeLink" : ""}
+										className={
+											(inView ? "" : "displayNone") +
+											(activeButton === "employees" ? "activeLink" : "")
+										}
 										onClick={() => {
 											setActiveButton("employees");
 											scroll.scrollToTop({
@@ -127,15 +146,13 @@ const Layout = (props) => {
 									</li>
 								</ul>
 							</div>
-							<h3 className={inView ? "" : "displayNone"}>
-								by Guru Updesh Singh & Liheng Yi
-							</h3>
+							<p className={inView ? "" : "displayNone"}></p>
 						</div>
 					)}
 				</InView>
 			</div>
 			<ToastContainer
-				position="bottom-right"
+				position='bottom-right'
 				autoClose={2500}
 				theme={"dark"}
 				closeOnClick

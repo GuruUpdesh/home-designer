@@ -1,8 +1,11 @@
 .status {
 	max-width: fit-content;
-	white-space: nowrap;
+	// white-space: nowrap;
 	font-size: 10.5px;
-	top: 22%;
+	top: 20%;
+	@media screen and (max-width: 1500px) {
+		top: 26%;
+	}
 	position: absolute;
 	list-style: none;
 	background-color: var(--clr-grey);
@@ -15,6 +18,9 @@
 
 	li {
 		padding: 0.7rem;
+		@media screen and (max-width: 1500px) {
+			padding: .4rem;
+		}
 		user-select: none;
 		position: relative;
 		overflow: hidden;
@@ -31,9 +37,9 @@
 			top: 0;
 		}
 
-		transform: translateX(-15px);
-		opacity: 0;
-		animation: list 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+		// transform: translateX(-15px);
+		// opacity: 0;
+		// animation: list 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 
 		&:first-child {
 			&:after {
@@ -45,13 +51,13 @@
 			animation: none;
 		}
 
-		$n: 3;
+		// $n: 3;
 
-		@for $x from 2 through $n {
-			&:nth-child(#{$x}) {
-				animation-delay: 100ms * ($x - 1) - ($x * 10);
-			}
-		}
+		// @for $x from 2 through $n {
+		// 	&:nth-child(#{$x}) {
+		// 		animation-delay: 100ms * ($x - 1) - ($x * 10);
+		// 	}
+		// }
 	}
 
 	svg {
@@ -82,7 +88,7 @@
 .activeStatus {
     // outline: .2px solid $primary;
     outline-offset: 1px;
-    box-shadow: 3px 3px 20px var(--clr-grey);
+    box-shadow: 3px 3px 20px var(--clr-grey-500);
 
     .green:hover {
         color: white;

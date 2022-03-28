@@ -45,7 +45,7 @@
 
 .selector {
 	user-select: none;
-	font-size: 12px;
+	font-size: clamp(10px, 1vw, 12px);
 	margin-bottom: 1rem;
 	// overflow: hidden;
 	div {
@@ -137,13 +137,19 @@
 }
 
 td .selector {
-	top: 22%;
+	font-size: clamp(10px, 1vw, 12px);
+	top: 15%;
     position: absolute;
-	font-size: 11px;
-	max-width: fit-content;
-
+	// font-size: 11px;
+	// max-width: fit-content;
+	
 	div {
 		padding: .7rem 1rem;
+		@media screen and (max-width: 1000px) {
+			width: fit-content;
+			padding: .4rem .5rem;
+			
+		}
 	}
 
 	li {
@@ -152,8 +158,9 @@ td .selector {
 }
 
 td .activeSelector {
-	z-index: 1000000;
+	z-index: 100000000000000000000;
 	filter: none;
+	top: 15%;
 
 	ul {
 		max-width: 233px;

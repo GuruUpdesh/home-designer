@@ -18,6 +18,10 @@ const TableRow = (props) => {
 	}, [props.data]);
 	const [errors, setErrors] = useState({});
 
+	useEffect(() => {
+		console.log("rerender")
+	}, [values])
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setValues({
@@ -43,7 +47,10 @@ const TableRow = (props) => {
 	function validateEdit() {
 		let errors = {};
 		for (let i = 0; i < props.data.length; i++) {
-			if (props.data[i].type.toLowerCase() === "text" || props.data[i].type.toLowerCase() === "description") {
+			if (
+				props.data[i].type.toLowerCase() === "text" ||
+				props.data[i].type.toLowerCase() === "description"
+			) {
 				if (!values[Object.keys(values)[i]]) {
 					errors[Object.keys(values)[i]] = true;
 				}
@@ -84,7 +91,16 @@ const TableRow = (props) => {
 	});
 
 	return props.index !== props.editable ? (
-		<tr className={props.index === props.isDeletePromptOpen ? "edit" : ""}>
+		<tr
+			className={props.index === props.isDeletePromptOpen ? "edit" : ""}
+			onContextMenu={() => {
+				const copy = {...props.contextFunctions.current};
+				copy.edit[0] = props.edit
+				copy.edit[1] = props.index
+				copy.delete[0] = props.promptDelete
+				copy.delete[1] = props.index
+				props.contextFunctions.current = copy
+			}}>
 			{props.data.map((object, index) => {
 				if (
 					object.type.toLowerCase() === "text" ||
@@ -150,16 +166,14 @@ const TableRow = (props) => {
 			})}
 			{props.index === props.isDeletePromptOpen ? (
 				<>
-					<td>
+					<td className='btn'>
 						<button
-							className='prompt'
+							className='confirm'
 							onClick={() => {
 								props.cancelDeletePrompt();
 							}}>
 							cancel
 						</button>
-					</td>
-					<td>
 						<button
 							className='delete'
 							onClick={() => {
@@ -171,20 +185,22 @@ const TableRow = (props) => {
 				</>
 			) : (
 				<>
-					<td>
+					<td className='btn'>
 						<button
+							className=' arrow-span-label'
 							onClick={() => {
 								props.edit(props.index);
 							}}>
 							<MdEdit />
+							<span>edit</span>
 						</button>
-					</td>
-					<td>
 						<button
+							className=' arrow-span-label'
 							onClick={() => {
 								props.promptDelete(props.index);
 							}}>
 							<IoClose />
+							<span>delete</span>
 						</button>
 					</td>
 				</>
@@ -215,17 +231,28 @@ const TableRow = (props) => {
 				}
 				if (value.type.toLowerCase() === "date") {
 					let date = new Date(values[value.attribute]);
-						return (
-							<td
-								key={index}
-								className={errors[value.attribute] ? "editDate invalid" : "editDate "}>
-								<DateInput inputDate={date} handleDateChange={handleDateChange} attribute={value.attribute} isNull={values[value.attribute]}/>
-							</td>
-						);
+					return (
+						<td
+							key={index}
+							className={errors[value.attribute] ? "editDate invalid" : "editDate "}
+							tabIndex={0}>
+							<DateInput
+								inputDate={date}
+								handleDateChange={handleDateChange}
+								attribute={value.attribute}
+								isNull={values[value.attribute]}
+							/>
+						</td>
+					);
 				}
 				if (value.type.toLowerCase() === "select") {
 					return (
-						<td key={index} className={errors[value.attribute] ? "editSelector invalid" : "editSelector"}>
+						<td
+							key={index}
+							className={
+								errors[value.attribute] ? "editSelector invalid" : "editSelector"
+							}
+							tabIndex={0}>
 							<Selector
 								value={value.attribute}
 								handleSelector={(name, id) => {
@@ -260,7 +287,12 @@ const TableRow = (props) => {
 				}
 				if (value.type.toLowerCase() === "status") {
 					return (
-						<td key={index} className={errors[value.attribute] ? "editSelector invalid" : "editSelector"} >
+						<td
+							key={index}
+							className={
+								errors[value.attribute] ? "editSelector invalid" : "editSelector"
+							}
+							tabIndex={0}>
 							<Status
 								status={values[value.attribute]}
 								edit={true}
@@ -272,7 +304,7 @@ const TableRow = (props) => {
 				}
 				if (value.type.toLowerCase() === "list") {
 					return (
-						<td className='list editSelector' key={index}>
+						<td className='list' key={index}>
 							<List
 								default={value.attribute}
 								addresses={value.value}
@@ -283,17 +315,15 @@ const TableRow = (props) => {
 				}
 				return <td key={index}>error</td>;
 			})}
-			<td>
+			<td className='btn'>
 				<button
 					onClick={() => {
 						setErrors({});
 						props.cancelEdit();
 					}}
-					>
+					className='cancel'>
 					cancel
 				</button>
-			</td>
-			<td>
 				<button className='confirm' onClick={handleSubmit}>
 					save
 				</button>
