@@ -40,7 +40,7 @@ const Addresses = ({contextFunctions}) => {
 	// read
 	const getAddressRows = async () => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/addresses`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -57,7 +57,7 @@ const Addresses = ({contextFunctions}) => {
 	// create
 	const addAddress = async (values) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/addresses`, {
 			method: "PUT",
 			body: JSON.stringify({
 				address: values.address,
@@ -93,7 +93,7 @@ const Addresses = ({contextFunctions}) => {
 			cID: values.client,
 		};
 
-		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/addresses`, {
 			method: "POST",
 			body: JSON.stringify(request),
 			headers: {
@@ -117,7 +117,7 @@ const Addresses = ({contextFunctions}) => {
 	// delete
 	const deleteAddressRow = async (index, id) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/addresses`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/addresses`, {
 			method: "DELETE",
 			body: JSON.stringify({ id: id }),
 			headers: {
@@ -141,7 +141,7 @@ const Addresses = ({contextFunctions}) => {
 			return;
 		}
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/addresses/filter`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/addresses/filter`, {
 			method: "POST",
 			body: JSON.stringify({ filterBy }),
 			headers: {

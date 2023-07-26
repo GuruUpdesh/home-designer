@@ -24,7 +24,7 @@ const ProjectsEmployee = ({contextFunctions}) => {
 
 	const getProjectsEmployeeRows = async () => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/projects-employees`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects-employees`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -41,7 +41,7 @@ const ProjectsEmployee = ({contextFunctions}) => {
 	// create
 	const addProjectsEmployee = async (values) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/projects-employees`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects-employees`, {
 			method: "PUT",
 			body: JSON.stringify({
 				pID: values.project,
@@ -66,7 +66,7 @@ const ProjectsEmployee = ({contextFunctions}) => {
 	//edit 
 	const editProjectsEmployeesRow = async (index, values) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/projects-employees`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects-employees`, {
 			method: "POST",
 			body: JSON.stringify({id: values.id, pID: values.project, eID: values.employee}),
 			headers: {
@@ -91,7 +91,7 @@ const ProjectsEmployee = ({contextFunctions}) => {
 	//delete
 	const deleteProjectsEmployeesRow = async (index, id) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/projects-employees`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects-employees`, {
 			method: "DELETE",
 			body: JSON.stringify({ id: id }),
 			headers: {

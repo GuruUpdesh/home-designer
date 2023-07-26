@@ -40,7 +40,7 @@ const Projects = ({contextFunctions}) => {
 	// read
 	const getProjectRows = async () => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -57,7 +57,7 @@ const Projects = ({contextFunctions}) => {
 	// create
 	const addProject = async (values) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects`, {
 			method: "PUT",
 			body: JSON.stringify({
 				name: values.name,
@@ -93,7 +93,7 @@ const Projects = ({contextFunctions}) => {
 			aID: values.address
 		}
 
-		await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects`, {
 			method: "POST",
 			body: JSON.stringify(request),
 			headers: {
@@ -118,7 +118,7 @@ const Projects = ({contextFunctions}) => {
 	// delete
 	const deleteProjectRow = async (index, id) => {
 		setLoaded(true)
-		await fetch(`${process.env.REACT_APP_API_URL}/projects`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects`, {
 			method: "DELETE",
 			body: JSON.stringify({ id: id }),
 			headers: {
@@ -142,7 +142,7 @@ const Projects = ({contextFunctions}) => {
 			return
 		}
 		setLoaded(true)
-		await fetch(`${process.env.REACT_APP_API_URL}/projects/filter`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/projects/filter`, {
 			method: "POST",
 			body: JSON.stringify({filterBy}),
 			headers: {

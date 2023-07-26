@@ -37,7 +37,7 @@ const Selector = (props) => {
 	}, []);
 
 	const getRelationship = async () => {
-		await fetch(`${process.env.REACT_APP_API_URL}/one`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/one`, {
 			method: "POST",
 			body: JSON.stringify({
 				table: props.value,

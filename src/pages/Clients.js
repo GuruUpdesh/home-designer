@@ -23,7 +23,7 @@ const Clients = ({contextFunctions}) => {
 
 	// read
 	const getClientRows = async () => {
-		await fetch(`${process.env.REACT_APP_API_URL}/clients`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/clients`, {
 			method: "GET",
 		}).then((response) => {
 			if (response.status === 200) {
@@ -40,7 +40,7 @@ const Clients = ({contextFunctions}) => {
 	// create
 	const addClient = async (values) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/clients`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/clients`, {
 			method: "PUT",
 			body: JSON.stringify({ name: values.name, email: values.email, phone: values.phone }),
 			headers: {
@@ -62,7 +62,7 @@ const Clients = ({contextFunctions}) => {
 	// edit
 	const editClientRow = async (index, values) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/clients`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/clients`, {
 			method: "POST",
 			body: JSON.stringify({
 				id: values.id,
@@ -91,7 +91,7 @@ const Clients = ({contextFunctions}) => {
 	// delete
 	const deleteClientRow = async (index, id) => {
 		setLoaded(false)
-		await fetch(`${process.env.REACT_APP_API_URL}/clients`, {
+		await fetch(`${process.env.REACT_APP_API_URL_local}/clients`, {
 			method: "DELETE",
 			body: JSON.stringify({ id: id }),
 			headers: {
