@@ -1,6 +1,6 @@
 # Home Designer
 
-**[LIVE DEMO](https://home-designer-five.vercel.app/)** (Only works in **Chrome**)
+**[LIVE DEMO](https://home-designer.guruupdeshsingh.dev/)** (Only works in **Chrome**)
 
 ## The Project
 
@@ -17,7 +17,7 @@ Features include:
 - 404 page
 - etc
 
-**[LIVE DEMO](https://home-designer-five.vercel.app/)**
+**[LIVE DEMO](https://home-designer.guruupdeshsingh.dev/)**
 
 ### Overview
 
