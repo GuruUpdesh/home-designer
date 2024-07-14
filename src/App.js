@@ -10,6 +10,7 @@ import ProjectsEmployee from "./pages/ProjectsEmployee";
 import Home from "./pages/Home";
 import ContextMenu from "./components/ContextMenu";
 import NotFound from "./pages/NotFound";
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
 	const contextFunctions = useRef({
@@ -21,6 +22,7 @@ function App() {
 
 	return (
 		<HashRouter>
+			<Analytics />
 			<ContextMenu contextFunctions={contextFunctions}/>
 			<Layout contextFunctions={contextFunctions}>
 				<Routes>
