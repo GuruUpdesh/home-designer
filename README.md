@@ -1,7 +1,5 @@
 # Home Designer
 
-**[LIVE DEMO](https://home-designer.guruupdeshsingh.dev/)** (Only works in **Chrome**)
-
 ## The Project
 
 Home designer is the final project of my introduction to databases class. We learned about database design, SQL, database normalization, and much more. The project is a for a theoretical company and is intended to be used without any authentication by an administrator. I worked on this project with my partner [Liheng Yi](https://github.com/Liheng-Yi). I took this project as an opportunity to work on my React and CSS skills, building the frontend from scratch and writing over 3000 lines of CSS. The implementation of the database and backend was far easier than our frontend implementation. Overall this project gave me a good foundation for working with databases as well as practice in React, SCSS, and JavaScript.
@@ -16,8 +14,6 @@ Features include:
 - Search and filter functionality
 - 404 page
 - etc
-
-**[LIVE DEMO](https://home-designer.guruupdeshsingh.dev/)**
 
 ### Overview
 
